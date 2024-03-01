@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Web app example</title>
+
+        <meta charset="utf-8" />
+
+        <!-- Disables zooming, making the app appear more like a native app -->
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no" />
+        <!-- Allows the app to be run in full-screen mode on mobile devices -->
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!-- Sets the status bar appearance when added to the home screen on iOS -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <link rel="shortcut icon" type="image/ico" href="./images/favicon.png" />
+
+        <link rel="stylesheet" href="./css/index.css">
+
+        <!-- Import and initialize the JavaScript App class -->
+        <script type="module" src="./js/app.class.js"></script>
+    </head>
+    <body>
+        <div class="prompt">
+            <button class="prompt__reply">Reply</button>
+        </div>
+
+        <canvas></canvas>
+    </body>
+</html>
