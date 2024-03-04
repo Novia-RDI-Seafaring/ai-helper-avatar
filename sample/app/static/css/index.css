@@ -1,3 +1,5 @@
+/* Style convention: https://getbem.com/ */
+
 * {
     box-sizing: border-box;
 }
