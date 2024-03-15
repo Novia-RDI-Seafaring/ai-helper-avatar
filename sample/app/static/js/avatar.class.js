@@ -13,7 +13,7 @@ export default class Avatar {
 
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
-        this.#context.scene.add(this.#rig);
+        context.scene.add(this.#rig);
 
         // Create an animation mixer for the rig
         this.#mixer = new THREE.AnimationMixer(this.#rig);
@@ -26,6 +26,6 @@ export default class Avatar {
 
     update(context) {
         // Update animation
-        this.#mixer.update(#context.elapsedSeconds);
+        this.#mixer.update(context.elapsedSeconds);
     }
 }
