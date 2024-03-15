@@ -1,7 +1,10 @@
 *
 !static/
 !static/**/*
-!*.ini
-!*.py
+!virtual_environments/
+!virtual_environments/**/*
 !requirements.txt
 !start.bat
+!*.ini
+!*.py
+
