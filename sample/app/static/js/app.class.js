@@ -1,5 +1,6 @@
 import ModelManager from './modelmanager.class.js';
 
+import Avatar from './avatar.class.js';
 import Socket from './socket.class.js';
 import Spinner from './spinner.class.js';
 
