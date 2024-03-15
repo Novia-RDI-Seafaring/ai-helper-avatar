@@ -1,0 +1,7 @@
+*
+!static/
+!static/**/*
+!config.ini
+!*.py
+!requirements.txt
+!start.bat
