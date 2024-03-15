@@ -7,7 +7,7 @@ export default class Spinner {
 
     constructor(context) {
         // Load the susanne model and add a copy to the scene
-        this.#model = ModelManager.getModel('Avatar01.glb').scene.clone();
+        this.#model = ModelManager.getModel('Susanne.glb').scene.clone();
 
         context.scene.add(this.#model);
     }
