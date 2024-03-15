@@ -11,8 +11,10 @@ export default class App {
     static _init() {
         // After the window loads, pre-load all content and start the app
         window.addEventListener('load', () => {
-            ModelManager.asyncLoadGltfModels(['susanne.glb'])
+            ModelManager.asyncLoadGltfModels(['Avatar01.glb'])
             .then(() => {
+
+                // Instantiate the application.
                 new App();
             });
         });
@@ -27,6 +29,8 @@ export default class App {
     #spinner = null;
     #flyControls = null;
     #lastTime = null;
+    #rig = null;
+    #mixer = null;
 
     constructor() {
         // Create the application context (better than relying on singletons)
@@ -36,6 +40,15 @@ export default class App {
             totalSeconds: 0,
         };
 
+        const gltf = ModelManager.getModel('Avatar01.glb');
+        this.#rig = gltf.scene.getObjectByName('Rig');
+        this.#mixer = new THREE.AnimationMixer(this.#rig);
+        
+        const animation = gltf.animations.find(animation => animation.name === "Welcome");
+
+        console.log(gltf.animations);
+
+        
         // Setup Three.JS renderer and scene
         this.#setupThreeJs();
 
@@ -50,6 +63,13 @@ export default class App {
 
         // Initial resize
         this.#handleResize();
+
+        this.#context.scene.add(this.#rig);
+
+        this.#mixer.clipAction(animation).play();
+
+        
+
     }
 
     #setupThreeJs() {
@@ -82,7 +102,7 @@ export default class App {
 
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
-        this.#context.camera.position.z = 3;
+        this.#context.camera.position.set(0, 2, 5)
 
         // Create fly controls for easier debugging
         this.#flyControls = new FlyControls(this.#context.camera, renderer.domElement);
@@ -110,6 +130,8 @@ export default class App {
 
         this.#context.elapsedSeconds = dt;
         this.#context.totalSeconds += dt;
+
+        this.#mixer.update(this.#context.elapsedSeconds);
 
         // Update spinner
         this.#spinner.update(this.#context);
