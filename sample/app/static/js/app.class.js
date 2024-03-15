@@ -11,9 +11,8 @@ export default class App {
     static _init() {
         // After the window loads, pre-load all content and start the app
         window.addEventListener('load', () => {
-            ModelManager.asyncLoadGltfModels(['Avatar01.glb'])
+            ModelManager.asyncLoadGltfModels(['Susanne.glb', 'Avatar01.glb'])
             .then(() => {
-
                 // Instantiate the application.
                 new App();
             });
@@ -26,11 +25,10 @@ export default class App {
 
     // Declare private members
     #context = null;
+    #avatar = null;
     #spinner = null;
     #flyControls = null;
     #lastTime = null;
-    #rig = null;
-    #mixer = null;
 
     constructor() {
         // Create the application context (better than relying on singletons)
@@ -39,15 +37,6 @@ export default class App {
             elapsedSeconds: 0,
             totalSeconds: 0,
         };
-
-        const gltf = ModelManager.getModel('Avatar01.glb');
-        this.#rig = gltf.scene.getObjectByName('Rig');
-        this.#mixer = new THREE.AnimationMixer(this.#rig);
-        
-        const animation = gltf.animations.find(animation => animation.name === "Welcome");
-
-        console.log(gltf.animations);
-
         
         // Setup Three.JS renderer and scene
         this.#setupThreeJs();
@@ -58,18 +47,14 @@ export default class App {
         // Create an example spinner
         this.#spinner = new Spinner(this.#context);
 
+        // Create an avatar
+        this.#avatar = new Avatar(this.#context);
+
         // For calculating delta time
         this.#lastTime = null;
 
         // Initial resize
         this.#handleResize();
-
-        this.#context.scene.add(this.#rig);
-
-        this.#mixer.clipAction(animation).play();
-
-        
-
     }
 
     #setupThreeJs() {
@@ -131,10 +116,11 @@ export default class App {
         this.#context.elapsedSeconds = dt;
         this.#context.totalSeconds += dt;
 
-        this.#mixer.update(this.#context.elapsedSeconds);
-
         // Update spinner
         this.#spinner.update(this.#context);
+
+        // Update avatar
+        this.#avatar.update(this.#avatar);
 
         // Update fly controls
         this.#flyControls.update(dt);
