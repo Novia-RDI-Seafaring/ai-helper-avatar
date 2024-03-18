@@ -1,49 +1,57 @@
-/* Style convention: https://getbem.com/ */
+/* Style convention:https://getbem.com/ */
 
 * {
-    box-sizing: border-box;
+    box-sizing:border-box;
 }
 
 html,
 body {
-    font-family: Verdana, Geneva, sans-serif;
-    height: 100%;
-    -webkit-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    font-family:Verdana, Geneva, sans-serif;
+    height:100%;
+    -webkit-user-select:none;
+        -ms-user-select:none;
+            user-select:none;
 }
 
 body {
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
+    margin:0;
+    overflow:hidden;
+    width:100%;
+}
+
+canvas {
+    left:0;
+    height:100%;
+    position:absolute;
+    top:0;
+    width:100%;
 }
 
 .prompt {
-    background-color: #88ff8855;
-    border-radius: 1vh;
-    height: 20vh;
-    margin: 1vh;
-    width: 50vh;
+    background-color:#88ff8855;
+    border-radius:1vh;
+    height:20vh;
+    margin:1vh;
+    width:50vh;
 }
 
     .prompt__reply {
-        background-color: #04AA6D;
-        border: none;
-        border-radius: 1vh;
-        color: white;
-        display: inline-block;
-        font-size: 2vh;
-        margin: 1vh;
-        padding: 1vh 2vh;
-        text-align: center;
-        text-decoration: none;
+        background-color:#04AA6D;
+        border:none;
+        border-radius:1vh;
+        color:white;
+        display:inline-block;
+        font-size:2vh;
+        margin:1vh;
+        padding:1vh 2vh;
+        text-align:center;
+        text-decoration:none;
     }
 
         .prompt__reply:hover {
-            background-color: #ff6b00;
+            background-color:#ff6b00;
         }
 
         .prompt__reply:active {
-            background-color: #ff9100;
+            background-color:#ff9100;
         }
