@@ -28,8 +28,8 @@ export default class Avatar {
     }
 
     playAnimation(name, crossFadeTime = 0.5) {
-    // Find animation
-    const animation = gltf.animations.find(animation => animation.name === 'Welcome');
+        // Find animation
+        const animation = gltf.animations.find(animation => animation.name === 'Welcome');
         if (animation === undefined) {
             throw new Error(`Invalid animation "${name}"`);
         }
