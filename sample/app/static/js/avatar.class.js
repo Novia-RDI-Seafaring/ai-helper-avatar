@@ -6,7 +6,7 @@ export default class Avatar {
     // Declare private members
     #rig = null;
     #mixer = null;
-	#playingAction = null;
+    #playingAction = null;
 
     constructor(context) {
         // Get the avatar GLTF scene
@@ -28,10 +28,10 @@ export default class Avatar {
     }
 
     playAnimation(name, crossFadeTime = 0.5) {
-		// Find animation
-		const animation = gltf.animations.find(animation => animation.name === 'Welcome');
+    // Find animation
+    const animation = gltf.animations.find(animation => animation.name === 'Welcome');
         if (animation === undefined) {
-			throw new Error(`Invalid animation "${name}"`);
+            throw new Error(`Invalid animation "${name}"`);
         }
     
         // Create action for animation
@@ -39,11 +39,11 @@ export default class Avatar {
     
         // Cross-fade from last action
         if (this.#playingAction !== null) {
-			this.#playingAction.crossFadeTo(action, crossFadeTime);
+            this.#playingAction.crossFadeTo(action, crossFadeTime);
         }
         this.#playingAction = action;
 
-		// Play action
-		action.play();
+        // Play action
+        action.play();
     }
 }
