@@ -6,6 +6,7 @@ export default class Avatar {
     // Declare private members
     #rig = null;
     #mixer = null;
+	#playingAction = null;
 
     constructor(context) {
         // Get the avatar GLTF scene
@@ -18,14 +19,31 @@ export default class Avatar {
         // Create an animation mixer for the rig
         this.#mixer = new THREE.AnimationMixer(this.#rig);
 
-        // Start an animation
-        const animation = gltf.animations.find(animation => animation.name === 'Welcome');
-        
-        this.#mixer.clipAction(animation).play();
+        this.playAnimation('Welcome');
     }
 
     update(context) {
         // Update animation
         this.#mixer.update(context.elapsedSeconds);
+    }
+
+    playAnimation(name, crossFadeTime = 0.5) {
+		// Find animation
+		const animation = gltf.animations.find(animation => animation.name === 'Welcome');
+        if (animation === undefined) {
+			throw new Error(`Invalid animation "${name}"`);
+        }
+    
+        // Create action for animation
+        const action = this.#mixer.clipAction(animation);
+    
+        // Cross-fade from last action
+        if (this.#playingAction !== null) {
+			this.#playingAction.crossFadeTo(action, crossFadeTime);
+        }
+        this.#playingAction = action;
+
+		// Play action
+		action.play();
     }
 }
