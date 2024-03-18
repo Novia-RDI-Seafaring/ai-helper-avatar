@@ -35,16 +35,19 @@ export default class Avatar {
         setTimeout(() => this.playAnimation('Idle02'), 10000);
         setTimeout(() => this.playAnimation('Idle03'), 15000);
         setTimeout(() => this.playAnimation('Idle04'), 20000);
+        
+        // Move IK target
+        for (let i = 0; i < 100; i++) {
+            setTimeout(() => this.#ik.ikTarget.position.set(
+                Math.random() * 6 - 3, Math.random() * 6 - 3, Math.random() * 6 - 3), i * 3000);
+        }
     }
 
     update(context) {
         // Update action clip (animation)
         this.#mixer.update(context.elapsedSeconds);
 
-        // Move IK target and update IK
-        this.#ik.ikTarget.position.set(
-            -3, Math.sin(context.totalSeconds * 1.5) * 1.8, 0);
-            
+        // Update IK
         this.#ik.update(context);
     }
 

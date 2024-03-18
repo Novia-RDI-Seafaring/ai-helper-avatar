@@ -44,7 +44,7 @@ export default class HumanIK {
                 // Wrist limits (rotate right, rotate CCW, rotate up)
                 new THREE.Vector3(-10 * d2r, -20 * d2r, -50 * d2r),
                 // Forearm limits (rotate right, rotate CCW, rotate up, usually minimal to none for twist)
-                new THREE.Vector3(0 * d2r, 0 * d2r, 0 * d2r),
+                new THREE.Vector3(0 * d2r, -60 * d2r, 1 * d2r),
                 // Upper arm limits (rotate right, rotate CCW, rotate up)
                 new THREE.Vector3(0 * d2r, -90 * d2r, 0 * d2r),
             ];
@@ -52,9 +52,9 @@ export default class HumanIK {
                 // Wrist limits (rotate left, rotate CW, rotate down)
                 new THREE.Vector3(10 * d2r, 20 * d2r, 50 * d2r),
                 // Forearm limits (rotate left, rotate CW, rotate down, usually minimal to none for twist)
-                new THREE.Vector3(0 * d2r, 0 * d2r, 140 * d2r),
+                new THREE.Vector3(0 * d2r, 60 * d2r, 160 * d2r),
                 // Upper arm limits (rotate left, rotate CW, rotate down)
-                new THREE.Vector3(80 * d2r, -20 * d2r, 80 * d2r),
+                new THREE.Vector3(80 * d2r, -30 * d2r, 80 * d2r),
             ];
             
             // Create link objects for IK chain
