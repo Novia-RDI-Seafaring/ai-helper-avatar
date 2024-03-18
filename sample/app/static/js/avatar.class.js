@@ -36,7 +36,7 @@ export default class Avatar {
         this.#mixer.update(context.elapsedSeconds);
     }
 
-    playAnimation(name, crossFadeTime = 0.5) {
+    playAnimation(name, crossFadeSeconds = 0.5) {
         // Find animation
         const animation = this.#animations.find(animation => animation.name === name);
         if (animation === undefined) {
@@ -48,7 +48,7 @@ export default class Avatar {
     
         // Cross-fade from last action clip
         if (this.#playingAction !== null) {
-            this.#playingAction.crossFadeTo(action, crossFadeTime);
+            this.#playingAction.crossFadeTo(action, crossFadeSeconds);
         }
         this.#playingAction = action;
 
