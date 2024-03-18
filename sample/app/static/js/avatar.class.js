@@ -19,7 +19,12 @@ export default class Avatar {
         // Create an animation mixer for the rig
         this.#mixer = new THREE.AnimationMixer(this.#rig);
 
+        // Schedule animations
         this.playAnimation('Welcome');
+        setTimeout(() => this.playAnimation('Idle01'), 5000);
+        setTimeout(() => this.playAnimation('Idle02'), 10000);
+        setTimeout(() => this.playAnimation('Idle03'), 15000);
+        setTimeout(() => this.playAnimation('Idle04'), 20000);
     }
 
     update(context) {
