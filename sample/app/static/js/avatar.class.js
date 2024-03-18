@@ -28,7 +28,7 @@ export default class Avatar {
     }
 
     update(context) {
-        // Update animation
+        // Update action clip
         this.#mixer.update(context.elapsedSeconds);
     }
 
@@ -39,16 +39,16 @@ export default class Avatar {
             throw new Error(`Invalid animation "${name}"`);
         }
     
-        // Create action for animation
+        // Create action clip for animation
         const action = this.#mixer.clipAction(animation);
     
-        // Cross-fade from last action
+        // Cross-fade from last action clip
         if (this.#playingAction !== null) {
             this.#playingAction.crossFadeTo(action, crossFadeTime);
         }
         this.#playingAction = action;
 
-        // Play action
+        // Play action clip
         action.play();
     }
 }
