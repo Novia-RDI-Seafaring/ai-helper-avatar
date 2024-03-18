@@ -4,6 +4,7 @@ import * as THREE from './lib/three.js/three.module.js';
 
 export default class Avatar {
     // Declare private members
+    #animations = null;
     #rig = null;
     #mixer = null;
     #playingAction = null;
@@ -11,6 +12,9 @@ export default class Avatar {
     constructor(context) {
         // Get the avatar GLTF scene
         const gltf = ModelManager.getModel('Avatar01.glb');
+
+        // Save animations
+        this.#animations = gltf.animations;
 
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
@@ -34,7 +38,7 @@ export default class Avatar {
 
     playAnimation(name, crossFadeTime = 0.5) {
         // Find animation
-        const animation = gltf.animations.find(animation => animation.name === name);
+        const animation = this.#animations.find(animation => animation.name === name);
         if (animation === undefined) {
             throw new Error(`Invalid animation "${name}"`);
         }
