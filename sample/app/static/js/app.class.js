@@ -46,7 +46,7 @@ export default class App {
         this.#context.socket = new Socket();
 
         // Create an example spinner
-        this.#spinner = new Spinner(this.#context);
+        //this.#spinner = new Spinner(this.#context);
 
         // Create an avatar
         this.#avatar = new Avatar(this.#context);
@@ -88,7 +88,7 @@ export default class App {
 
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
-        this.#context.camera.position.set(0, 2, 5)
+        this.#context.camera.position.set(0, 1, 2)
 
         // Create fly controls for easier debugging
         this.#flyControls = new FlyControls(this.#context.camera, renderer.domElement);

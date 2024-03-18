@@ -1,11 +1,14 @@
+import HumanIK from './humanik.class.js';
 import ModelManager from './modelmanager.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
+import { CCDIKSolver } from './lib/three.js/CCDIKSolver.js';
 
 export default class Avatar {
     // Declare private members
-    #animations = null;
     #rig = null;
+    #ik = null;
+    #animations = null;
     #mixer = null;
     #playingAction = null;
 
@@ -13,16 +16,19 @@ export default class Avatar {
         // Get the avatar GLTF scene
         const gltf = ModelManager.getModel('Avatar01.glb');
 
-        // Save animations
-        this.#animations = gltf.animations;
-
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
         context.scene.add(this.#rig);
+        
+        // Save animations
+        this.#animations = gltf.animations;
 
         // Create an animation mixer for the rig
         this.#mixer = new THREE.AnimationMixer(this.#rig);
-
+        
+        // Add human inverse kinematics
+        this.#ik = new HumanIK(context, this.#rig);
+        
         // Schedule animations
         this.playAnimation('Welcome');
         setTimeout(() => this.playAnimation('Idle01'), 5000);
@@ -32,8 +38,14 @@ export default class Avatar {
     }
 
     update(context) {
-        // Update action clip
+        // Update action clip (animation)
         this.#mixer.update(context.elapsedSeconds);
+
+        // Move IK target and update IK
+        this.#ik.ikTarget.position.set(
+            -3, Math.sin(context.totalSeconds * 1.5) * 1.8, 0);
+            
+        this.#ik.update(context);
     }
 
     playAnimation(name, crossFadeSeconds = 0.5) {
