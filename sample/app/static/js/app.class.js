@@ -121,7 +121,7 @@ export default class App {
         this.#spinner.update(this.#context);
 
         // Update avatar
-        this.#avatar.update(this.#avatar);
+        this.#avatar.update(this.#context);
 
         // Update fly controls
         this.#flyControls.update(dt);
