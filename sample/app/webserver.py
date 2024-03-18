@@ -53,7 +53,10 @@ class WebServer:
         @self._server.route('/shutdown')
         def handle_shutdown():
             if request.remote_addr == '127.0.0.1':
-                self._socketio.stop()
+                try:
+                    self._socketio.stop()
+                except:
+                    cprint('Failed to stop server', PRINT_COLOR)
                 return 'OK', 200
             else:
                 abort(404)
@@ -106,10 +109,6 @@ class WebServer:
         '''Stop the web server by making a shutdown request via HTTP.'''
 
         requests.get(f'http://127.0.0.1:{self._port}/shutdown')
-
-        self._server_thread.join()
-
-        cprint('WebServer: Webserver stopped', PRINT_COLOR)
 
     def open_page(self):
         '''Open the web server's main page in the default web browser.'''

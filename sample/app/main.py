@@ -1,5 +1,4 @@
 import configparser
-import keyboard
 import os
 import sys
 import time
@@ -36,20 +35,17 @@ context.webserver = WebServer(context)
 context.webserver.start_server()
 context.webserver.open_page()
 
-print('Press ESC to stop')
+print('Press ctrl-c to quit')
 
 # Main loop to keep the application running
 try:
     while True:
-        if keyboard.is_pressed('esc'):
-            break
-
-        time.sleep(0.1)
+        time.sleep(1)
 except KeyboardInterrupt:
-    pass
+    print('Quitting...')
 
 # Cleanup and shutdown procedures
-context.webserver.close()
+context.webserver.stop_server()
 
 time.sleep(1)
 
