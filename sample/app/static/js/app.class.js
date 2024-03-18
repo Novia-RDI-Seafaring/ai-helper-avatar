@@ -118,13 +118,13 @@ export default class App {
         this.#context.totalSeconds += dt;
 
         // Update spinner
-        this.#spinner.update(this.#context);
+        this.#spinner?.update(this.#context);
 
         // Update avatar
-        this.#avatar.update(this.#context);
+        this.#avatar?.update(this.#context);
 
         // Update fly controls
-        this.#flyControls.update(dt);
+        this.#flyControls?.update(dt);
 
         // Render the scene using the camera
         this.#context.renderer.render(this.#context.scene, this.#context.camera);
