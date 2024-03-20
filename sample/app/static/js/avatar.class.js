@@ -37,10 +37,7 @@ export default class Avatar {
         
         // Schedule animations
         this.playAnimation('Welcome');
-        setTimeout(() => this.playAnimation('Idle01'), 5000);
-        setTimeout(() => this.playAnimation('Idle02'), 10000);
-        setTimeout(() => this.playAnimation('Idle04'), 15000);
-        setTimeout(() => this.playAnimation('Idle03'), 20000);
+        setTimeout(() => this.playAnimation('Idlepoint'), 3000);
         
         // Move IK target
         for (let i = 0; i < 100; i++) {
