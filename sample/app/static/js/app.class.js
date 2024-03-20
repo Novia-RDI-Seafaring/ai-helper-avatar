@@ -2,7 +2,7 @@ import ModelManager from './modelmanager.class.js';
 
 import Avatar from './avatar.class.js';
 import Socket from './socket.class.js';
-import Spinner from './spinner.class.js';
+import Lighting from './lighting.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
 import { FlyControls } from './lib/three.js/FlyControls.js';
@@ -12,7 +12,7 @@ export default class App {
     static _init() {
         // After the window loads, pre-load all content and start the app
         window.addEventListener('load', () => {
-            ModelManager.asyncLoadGltfModels(['Susanne.glb', 'Avatar01.glb'])
+            ModelManager.asyncLoadGltfModels(['Avatar01.glb'])
             .then(() => {
                 // Instantiate the application.
                 new App();
@@ -27,7 +27,6 @@ export default class App {
     // Declare private members
     #context = null;
     #avatar = null;
-    #spinner = null;
     #flyControls = null;
     #lastTime = null;
 
@@ -45,11 +44,11 @@ export default class App {
         // Create the socket
         this.#context.socket = new Socket();
 
-        // Create an example spinner
-        //this.#spinner = new Spinner(this.#context);
-
         // Create an avatar
         this.#avatar = new Avatar(this.#context);
+
+        // Create lighting for the scene
+        this.#context.Lighting = new Lighting(this.#context.scene);
 
         // For calculating delta time
         this.#lastTime = null;
@@ -74,6 +73,14 @@ export default class App {
         // Set the color encoding for the renderer for the sRGB color space
         renderer.outputEncoding = THREE.sRGBEncoding;
 
+        // Add tonemapping
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1.8;
+
+        // Add shadowmap
+        this.#context.renderer.shadowMap.enabled = true;
+        this.#context.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
         // Setup main loop
         renderer.setAnimationLoop(this.#update.bind(this));
 
@@ -83,12 +90,20 @@ export default class App {
         // Create the main scene object
         this.#context.scene = new THREE.Scene();
 
-        // Add a simple directional light to the scene
-        this.#context.scene.add(new THREE.DirectionalLight(0xffffff, 3));
+        // Add a floor plane that can receive shadows
+        const planeGeometry = new THREE.PlaneGeometry(10, 10);
+        const planeMaterial = new THREE.MeshStandardMaterial({
+            color: 0xaaaaaa,
+            side: THREE.DoubleSide
+        });
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.rotation.x = -Math.PI / 2;
+        plane.receiveShadow = true;
+        this.#context.scene.add(plane);
 
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
-        this.#context.camera.position.set(0, 1, 2)
+        this.#context.camera.position.set(0, 1.7, 2.5)
 
         // Create fly controls for easier debugging
         this.#flyControls = new FlyControls(this.#context.camera, renderer.domElement);
@@ -116,9 +131,6 @@ export default class App {
 
         this.#context.elapsedSeconds = dt;
         this.#context.totalSeconds += dt;
-
-        // Update spinner
-        this.#spinner?.update(this.#context);
 
         // Update avatar
         this.#avatar?.update(this.#context);
