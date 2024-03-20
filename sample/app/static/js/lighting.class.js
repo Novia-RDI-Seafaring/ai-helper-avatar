@@ -15,7 +15,7 @@ export default class Lighting {
         this.#keyLight = new THREE.DirectionalLight(0xffffff, intensity * 3);
         this.#keyLight.position.set(10, 10, 10);
         this.#keyLight.castShadow = true;
-        this.#keyLight.receiveShadowShadow = true;
+
         // Additional shadow configuration for the key light
         const size = 10;
         this.#keyLight.shadow.camera.left = -size;
