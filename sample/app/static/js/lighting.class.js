@@ -36,7 +36,7 @@ export default class Lighting {
 
     // Method to adjust the intensity of all lights
     setIntensity(intensity) {
-        this.#keyLight.intensity = intensity;
+        this.#keyLight.intensity = intensity * 3;
         this.#backLight.intensity = intensity * 0.5;
     }
 
