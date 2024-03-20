@@ -48,7 +48,7 @@ export default class App {
         this.#avatar = new Avatar(this.#context);
 
         // Create lighting for the scene
-        this.#context.Lighting = new Lighting(this.#context.scene);
+        this.#context.lighting = new Lighting(this.#context);
 
         // For calculating delta time
         this.#lastTime = null;
