@@ -5,8 +5,9 @@ export default class Lighting {
     #backLight;
     #hemiLight;
 
-    constructor(scene, intensity = 1) {
-
+    constructor(context, intensity = 1) {
+        const scene = context.scene;
+        
         this.#hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4)
         scene.add(this.#hemiLight);
 
@@ -40,9 +41,12 @@ export default class Lighting {
     }
 
     // Method to update the position of the lights, if needed
-    updatePositions(keyPosition, fillPosition, backPosition) {
-        if (keyPosition) this.#keyLight.position.set(...keyPosition);
-        if (backPosition) this.#backLight.position.set(...backPosition);
-    }
-    
+    updatePositions(keyPosition = null, backPosition = null) {
+        if (keyPosition !== null) {
+            this.#keyLight.position.copy(keyPosition);
+        }
+        if (backPosition !== null) {
+            this.#backLight.position.copy(backPosition);
+        }
+    }    
 }
