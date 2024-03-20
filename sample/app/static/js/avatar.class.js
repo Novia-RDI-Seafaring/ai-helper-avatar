@@ -2,7 +2,6 @@ import HumanIK from './humanik.class.js';
 import ModelManager from './modelmanager.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
-import { CCDIKSolver } from './lib/three.js/CCDIKSolver.js';
 
 export default class Avatar {
     // Declare private members
