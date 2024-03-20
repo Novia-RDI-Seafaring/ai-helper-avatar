@@ -15,6 +15,12 @@ export default class Avatar {
     constructor(context) {
         // Get the avatar GLTF scene
         const gltf = ModelManager.getModel('Avatar01.glb');
+        gltf.scene.traverse(function (child) {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
 
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
@@ -33,8 +39,8 @@ export default class Avatar {
         this.playAnimation('Welcome');
         setTimeout(() => this.playAnimation('Idle01'), 5000);
         setTimeout(() => this.playAnimation('Idle02'), 10000);
-        setTimeout(() => this.playAnimation('Idle03'), 15000);
-        setTimeout(() => this.playAnimation('Idle04'), 20000);
+        setTimeout(() => this.playAnimation('Idle04'), 15000);
+        setTimeout(() => this.playAnimation('Idle03'), 20000);
         
         // Move IK target
         for (let i = 0; i < 100; i++) {
