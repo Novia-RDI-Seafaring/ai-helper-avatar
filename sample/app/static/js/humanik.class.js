@@ -4,15 +4,20 @@ import { CCDIKSolver } from './lib/three.js/CCDIKSolver.js';
 export default class HumanIK {
     // Declare private members
     #ikSolvers = null;
-    
+    #startTime = null;
+    #activationDelay = 3000;
     // Declare public members
     ikTarget = null;
     ikFactor = 1;
     ikDamping = 0.2;
 
+
     constructor(context, rig) {
         // Get all skinned meshes (skeleton-driven mesh) in the rig
         const skinnedMeshes = rig.children.filter(obj => obj.isSkinnedMesh);
+
+        // Set the start time
+        this.#startTime = Date.now();
         
         // Create a unique IK solver for each skinned mesh (meshes may have different skeletons)
         this.#ikSolvers = skinnedMeshes.map(mesh => {
@@ -88,6 +93,12 @@ export default class HumanIK {
     }
 
     update(context) {
+        const currentTime = Date.now();
+        // Check if the activation delay has passed
+        if (currentTime - this.#startTime < this.#activationDelay) {
+            return; // Skip the IK update if the delay has not passed
+        }
+
         if (this.ikFactor <= 0) {
             return;
         }
