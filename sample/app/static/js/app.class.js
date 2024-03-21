@@ -21,8 +21,8 @@ export default class App {
     }
 
     // Timestep min and max seconds
-    static #elapsedSecondsMin = 0.0001;
-    static #elapsedSecondsMax = 1;
+    static #ELAPSED_SECONDS_MIN = 0.0001;
+    static #ELAPSED_SECONDS_MAX = 1;
 
     // Declare private members
     #context = null;
@@ -126,7 +126,7 @@ export default class App {
     // Method called on each frame to update the application's state
     #update(time, frame = null) {
         // Calculate a constrained delta time to avoid extreme values
-        const dt = Math.max(App.#elapsedSecondsMin, Math.min(App.#elapsedSecondsMax,
+        const dt = Math.max(App.#ELAPSED_SECONDS_MIN, Math.min(App.#ELAPSED_SECONDS_MAX,
             this.#lastTime === null ? 0 : (time - this.#lastTime) / 1000));
         this.#lastTime = time;
 
