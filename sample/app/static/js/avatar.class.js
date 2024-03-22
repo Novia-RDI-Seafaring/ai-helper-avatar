@@ -2,7 +2,6 @@ import HumanIK from './humanik.class.js';
 import ModelManager from './modelmanager.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
-import { CCDIKSolver } from './lib/three.js/CCDIKSolver.js';
 
 export default class Avatar {
     // Declare private members
@@ -15,10 +14,10 @@ export default class Avatar {
     constructor(context) {
         // Get the avatar GLTF scene
         const gltf = ModelManager.getModel('Avatar01.glb');
-        gltf.scene.traverse(function (child) {
-            if (child.isMesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
+        gltf.scene.traverse(obj => {
+            if (obj.isMesh) {
+                obj.castShadow = true;
+                obj.receiveShadow = true;
             }
         });
 
