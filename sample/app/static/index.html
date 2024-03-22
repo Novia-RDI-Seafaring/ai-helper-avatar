@@ -31,16 +31,28 @@
             <button class="prompt__reply">Reply</button>
         </div> -->
         <header>
-            <div class="logo">
-                <img src="logo.png" alt="Logo">
+            <div class="head">
+                <div class="logo">
+                    <img class="logo" src="images/Vector.png" alt="Logo">
+                </div>
                 <h1 id="title">Virtual Assistant</h1>
             </div>
-            <button id="upload" class="upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload PDF</button>
+            <!-- <div class="api_btn">
+                <label for="apiKeyInput">Paste your API Key:</label>
+                <input type="text" id="apiKeyInput" class="api_input" placeholder="Enter API Key here">
+                <button id="saveApiKey" class="upload">Save API Key</button>
+                <div id="saveResult"></div>
+            </div> -->
+            <div class="upload_btn">
+                <button id="upload" class="upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload PDF</button>
+            </div>
             <!-- <div class="hashtag"><h1 id="title">#VirtualSeaTrial</h1></div> -->
         </header>
         <main class="container">
             <div class="content">
                 <div id="chatbot" class="chatUI">
+                    <!-- Loading Timeline Added Here, inside chatbot container -->
+                    <div id="loadingTimeline" class="loading-timeline"></div>
                     <div class="chat">
                         <div class="message">
                             <p class="messageText">Hello</p>
