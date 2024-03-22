@@ -29,6 +29,7 @@ export default class App {
     #avatar = null;
     #flyControls = null;
     #lastTime = null;
+    #helper = null;
 
     constructor() {
         // Create the application context (better than relying on singletons)
@@ -104,7 +105,8 @@ export default class App {
 
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
-        this.#context.camera.position.set(0, 1.7, 2.5)
+        this.#context.camera.position.set(-.35, 1.4, 1.15)
+        this.#context.camera.rotation.set(0, .25, 0);  
 
         // Create fly controls for easier debugging
         this.#flyControls = new FlyControls(this.#context.camera, renderer.domElement);

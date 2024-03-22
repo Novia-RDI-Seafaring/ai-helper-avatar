@@ -26,10 +26,16 @@ export default class Avatar {
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
         context.scene.add(this.#rig);
+        // this.#rig.position.set(.5, .2, 1.6);
 
         // Get the whiteboard and add it to the scene
         this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
         context.scene.add(this.#whiteboard);
+        // this.#whiteboard.position.set(-1.5, 1.5, .25);
+        // // Increase the width (x-axis) and height (y-axis)
+        // this.#whiteboard.scale.x *= 1.75; // Increase width by 50%
+        // this.#whiteboard.scale.y *= 1.5;   // Double the height
+
         
         // Save animations
         this.#animations = gltf.animations;
