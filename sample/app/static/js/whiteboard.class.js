@@ -6,7 +6,7 @@ export default class Whiteboard {
     // Declare private members
     #whiteboard = null;
     #material = null;
-    #angleDegrees = 0;
+    #angleDegrees = 90;
 
     constructor(context) {
         // Get the avatar GLTF scene
@@ -27,9 +27,12 @@ export default class Whiteboard {
     }
 
     update(context) {
-        const t = Math.pow(0.5, context.elapsedSeconds);
+        // Rotate whiteboard
+        const t = 1 - Math.pow(0.1, context.elapsedSeconds);
+        let a = this.#angleDegrees * Math.PI / 180 - this.#whiteboard.rotation.z;
+        a = (a + Math.PI) % (Math.PI * 2) - Math.PI;
 
-        this.#whiteboard.rotation.z = this.#whiteboard.rotation.x * t + this.#angleDegrees * Math.PI / 180 * (1 - t);
+        this.#whiteboard.rotation.z += a * t;
     }
     
     _loadPdf() {
