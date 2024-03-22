@@ -1,3 +1,13 @@
 # Python + Three.JS based web application
 
 The following sample demonstrates how to use a Flask server to build a simple three-dimensional web application using THREE.js. Real-time communication is faciliated by websockets through the Socket.IO library.
+
+
+## Running the demo
+The OPENAI_API_KEY needs to be an environemtnal variable, and easy way to do it is by rynning the server like this:
+
+```OPENAI_API_KEY='sk-sdfsdfE0u' python sample/app/main.py```
+
+Then you can query the PDF via the GET endpoint
+
+```http://127.0.0.1:7860/ask?query=what+is+the+max+temp+of+side+1```
