@@ -65,7 +65,7 @@ export default class Avatar {
         this.#ik.update(context);
     }
 
-    playAnimation(name, crossFadeSeconds = 0.5) {
+    playAnimation(name, crossFadeSeconds = 0.5, loop = false) {
         // Find animation
         const animation = this.#animations.find(animation => animation.name === name);
         if (animation === undefined) {
@@ -74,6 +74,8 @@ export default class Avatar {
     
         // Create action clip for animation
         const action = this.#mixer.clipAction(animation);
+        action.setLoop(loop ? THREE.LoopForever : THREE.LoopOnce);
+        action.clampWhenFinished = !loop;
     
         // Cross-fade from last action clip
         if (this.#playingAction !== null) {

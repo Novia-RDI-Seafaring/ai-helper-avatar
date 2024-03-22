@@ -1,8 +1,8 @@
 import ModelManager from './modelmanager.class.js';
 
 import Avatar from './avatar.class.js';
-import Socket from './socket.class.js';
 import Lighting from './lighting.class.js';
+import Whiteboard from './whiteboard.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
 import { FlyControls } from './lib/three.js/FlyControls.js';
@@ -42,11 +42,11 @@ export default class App {
         // Setup Three.JS renderer and scene
         this.#setupThreeJs();
 
-        // Create the socket
-        this.#context.socket = new Socket();
-
         // Create an avatar
         this.#avatar = new Avatar(this.#context);
+        
+        // Create the whiteboard
+        this.#context.whiteboard = new Whiteboard(this.#context);
 
         // Create lighting for the scene
         this.#context.lighting = new Lighting(this.#context);
@@ -134,12 +134,15 @@ export default class App {
 
         this.#context.elapsedSeconds = dt;
         this.#context.totalSeconds += dt;
-
+        
         // Update avatar
-        this.#avatar?.update(this.#context);
+        this.#avatar.update(this.#context);
+
+        // Update whiteboard
+        this.#context.whiteboard.update(this.#context);
 
         // Update fly controls
-        this.#flyControls?.update(dt);
+        this.#flyControls.update(dt);
 
         // Render the scene using the camera
         this.#context.renderer.render(this.#context.scene, this.#context.camera);
