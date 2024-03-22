@@ -3,12 +3,14 @@ import requests
 import secrets
 import threading
 import webbrowser
+import os
+import json
 
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 from termcolor import cprint
 
-from searchable_pdf import SearchablePDF
+from pdf_data_extractor import SearchablePDF
 
 PRINT_COLOR = 'light_blue'
 
@@ -18,8 +20,23 @@ class WebServer:
     def __init__(self, context):
         self._context = context
 
+        print(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.pdf')))
+
+        with open(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification_schema.json'))) as user_file:
+            file_contents = user_file.read()
+        json_value_string = json.dumps(json.loads(file_contents))
+        
+        with open(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.json'))) as json_schema_file:
+            json_schema_contents = json_schema_file.read()            
+            json_schema_string = json.dumps(json.loads(json_schema_contents))
+
         # Create searchable PDF instance
-        self._searchable_pdf = SearchablePDF('path/to/the/file.pdf', "the schema as string...")
+        self._searchable_pdf = SearchablePDF(
+            str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.pdf')),
+            json_value_string,
+            json_schema_string
+        )
+
 
         self._server_thread = None
 
@@ -51,6 +68,7 @@ class WebServer:
         @self._server.route('/ask', methods=['GET'])
         def handle_message():
             query = request.args.get('query', '') # Default to empty string if not provided
+            print(f"we are asking: {query}")
             result = self._searchable_pdf.query(query)
             return jsonify(result)
 
