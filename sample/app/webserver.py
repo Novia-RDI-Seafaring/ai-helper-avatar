@@ -6,7 +6,6 @@ import webbrowser
 
 from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit
 from termcolor import cprint
 
 from searchable_pdf import SearchablePDF
@@ -14,10 +13,13 @@ from searchable_pdf import SearchablePDF
 PRINT_COLOR = 'light_blue'
 
 class WebServer:
-    '''A web server class for serving static files and handling WebSocket connections.'''
+    '''A web server class for serving static files and handling API calls.'''
 
     def __init__(self, context):
         self._context = context
+
+        # Create searchable PDF instance
+        self._searchable_pdf = SearchablePDF('path/to/the/file.pdf', "the schema as string...")
 
         self._server_thread = None
 
@@ -36,17 +38,9 @@ class WebServer:
         # Secure the Flask session with a random secret key
         self._server.config['SECRET_KEY'] = secrets.token_hex(16)
 
-        self.searchable_pdf = SearchablePDF('path/to/the/file.pdf', "the schema as string...")
-
         # Only log errors to console
         log = logging.getLogger('werkzeug')
         log.setLevel(logging.ERROR)
-
-        # Setup SocketIO using 'threading' for asynchronous handling
-        self._socketio = SocketIO(self._server, async_mode='threading', cors_allowed_origins='*')
-
-        # Multithreading event flags for signaling when a reply has been received
-        self._test_reply_event = threading.Event()
 
         # HTTP route handlers
 
@@ -56,51 +50,20 @@ class WebServer:
 
         @self._server.route('/ask', methods=['GET'])
         def handle_message():
-            query = request.args.get('query', '')  # Default to empty string if not provided
-            result = self.searchable_pdf.query(query)
+            query = request.args.get('query', '') # Default to empty string if not provided
+            result = self._searchable_pdf.query(query)
             return jsonify(result)
-        
+
         @self._server.route('/shutdown')
         def handle_shutdown():
             if request.remote_addr == '127.0.0.1':
                 try:
-                    self._socketio.stop()
+                    self._server.stop()
                 except:
                     cprint('Failed to stop server', PRINT_COLOR)
                 return 'OK', 200
             else:
                 abort(404)
-
-        # Socket.IO handlers
-
-        @self._socketio.on('connect')
-        def handle_connect():
-            cprint(f'WebServer: Socket.IO client connected ({request.sid})', PRINT_COLOR)
-
-        @self._socketio.on('disconnect')
-        def handle_disconnect():
-            cprint(f'WebServer: Socket.IO client disconnected ({request.sid})', PRINT_COLOR)
-
-        @self._socketio.on('test_reply')
-        def handle_test_reply(data=None):
-            cprint('WebServer: Got message on "test_reply" namespace')
-
-            self._test_reply_event.set()
-
-    def send_message_test(self):
-        '''Send 'test' to JavaScript via Socket.IO.'''
-
-        self._test_reply_event.clear()
-
-        with self._server.app_context():
-            self._socketio.emit('test', { 'data': 'some_data' })
-
-    def wait_for_test_reply(self, timeout=None):
-        '''Wait for a reply on the 'test_reply' namespace.'''
-
-        if self._test_reply_event.is_set():
-            return
-        self._test_reply_event.wait(timeout)
 
     def start_server(self):
         '''Starts the web server on a separate thread for non-blocking operations.'''
@@ -113,7 +76,7 @@ class WebServer:
     def _run(self):
         '''The internal method to run the Flask app.'''
 
-        self._socketio.run(self._server, host='0.0.0.0', port=self._port, allow_unsafe_werkzeug=True)
+        self._server.run(host='127.0.0.1', port=self._port)
 
     def stop_server(self):
         '''Stop the web server by making a shutdown request via HTTP.'''
