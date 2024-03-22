@@ -4,6 +4,10 @@ The following sample demonstrates how to use a Flask server to build a simple th
 
 
 ## Running the demo
+We need to also install the other library.
+
+```pip install git+https://github.com/Novia-RDI-Seafaring/pdf-data-extractor.git```
+
 The OPENAI_API_KEY needs to be an environemtnal variable, and easy way to do it is by rynning the server like this:
 
 ```OPENAI_API_KEY='sk-sdfsdfE0u' python sample/app/main.py```
