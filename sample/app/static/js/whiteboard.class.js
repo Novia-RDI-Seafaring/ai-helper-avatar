@@ -6,7 +6,7 @@ export default class Whiteboard {
     // Declare private members
     #whiteboard = null;
     #material = null;
-    #angleDegrees = 0;
+    #angleDegrees = 180;
 
     constructor(context) {
         // Get the avatar GLTF scene
