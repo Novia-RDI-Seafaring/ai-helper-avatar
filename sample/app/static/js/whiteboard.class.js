@@ -15,11 +15,6 @@ export default class Whiteboard {
         // Add whiteboard and add it to the scene
         this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
         context.scene.add(this.#whiteboard);
-
-        this.#whiteboard.rotation.set(3.0415926536, 0, 0);
-        // // Increase the width (x-axis) and height (y-axis)
-        // this.#whiteboard.scale.x *= 1.75; // Increase width by 50%
-        // this.#whiteboard.scale.y *= 1.5;   // Double the height
         
         // Create an image texture for the white part
         const white = this.#whiteboard.children[1];
