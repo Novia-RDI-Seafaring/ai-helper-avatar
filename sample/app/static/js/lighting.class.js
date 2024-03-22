@@ -5,8 +5,9 @@ export default class Lighting {
     #backLight;
     #hemiLight;
 
-    constructor(scene, intensity = 1) {
-
+    constructor(context, intensity = 1) {
+        const scene = context.scene;
+        
         this.#hemiLight = new THREE.HemisphereLight(0xffeeb1, 0x080820, 4)
         scene.add(this.#hemiLight);
 
@@ -14,7 +15,7 @@ export default class Lighting {
         this.#keyLight = new THREE.DirectionalLight(0xffffff, intensity * 3);
         this.#keyLight.position.set(10, 10, 10);
         this.#keyLight.castShadow = true;
-        this.#keyLight.receiveShadowShadow = true;
+
         // Additional shadow configuration for the key light
         const size = 10;
         this.#keyLight.shadow.camera.left = -size;
@@ -35,14 +36,17 @@ export default class Lighting {
 
     // Method to adjust the intensity of all lights
     setIntensity(intensity) {
-        this.#keyLight.intensity = intensity;
+        this.#keyLight.intensity = intensity * 3;
         this.#backLight.intensity = intensity * 0.5;
     }
 
     // Method to update the position of the lights, if needed
-    updatePositions(keyPosition, fillPosition, backPosition) {
-        if (keyPosition) this.#keyLight.position.set(...keyPosition);
-        if (backPosition) this.#backLight.position.set(...backPosition);
-    }
-    
+    updatePositions(keyPosition = null, backPosition = null) {
+        if (keyPosition !== null) {
+            this.#keyLight.position.copy(keyPosition);
+        }
+        if (backPosition !== null) {
+            this.#backLight.position.copy(backPosition);
+        }
+    }    
 }
