@@ -2,6 +2,7 @@ import HumanIK from './humanik.class.js';
 import ModelManager from './modelmanager.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
+import { CCDIKSolver } from './lib/three.js/CCDIKSolver.js';
 
 export default class Avatar {
     // Declare private members
@@ -10,20 +11,25 @@ export default class Avatar {
     #animations = null;
     #mixer = null;
     #playingAction = null;
+    #whiteboard = null;
 
     constructor(context) {
         // Get the avatar GLTF scene
-        const gltf = ModelManager.getModel('Avatar01.glb');
-        gltf.scene.traverse(obj => {
-            if (obj.isMesh) {
-                obj.castShadow = true;
-                obj.receiveShadow = true;
+        const gltf = ModelManager.getModel('Avatar02.glb');
+        gltf.scene.traverse(function (child) {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
             }
         });
 
         // Get the rig and add it to the scene
         this.#rig = gltf.scene.getObjectByName('Rig');
         context.scene.add(this.#rig);
+
+        // Get the whiteboard and add it to the scene
+        this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
+        context.scene.add(this.#whiteboard);
         
         // Save animations
         this.#animations = gltf.animations;
