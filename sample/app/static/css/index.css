@@ -19,12 +19,22 @@ body {
     width:100%;
 }
 
-canvas {
+/* canvas {
     left:0;
     height:100%;
     position:absolute;
     top:0;
     width:100%;
+} */
+canvas {
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    /* zoom: 1.75; */
 }
 
 .prompt {
@@ -35,23 +45,23 @@ canvas {
     width:50vh;
 }
 
-    .prompt__reply {
-        background-color:#04AA6D;
-        border:none;
-        border-radius:1vh;
-        color:white;
-        display:inline-block;
-        font-size:2vh;
-        margin:1vh;
-        padding:1vh 2vh;
-        text-align:center;
-        text-decoration:none;
-    }
+.prompt__reply {
+    background-color:#04AA6D;
+    border:none;
+    border-radius:1vh;
+    color:white;
+    display:inline-block;
+    font-size:2vh;
+    margin:1vh;
+    padding:1vh 2vh;
+    text-align:center;
+    text-decoration:none;
+}
 
-        .prompt__reply:hover {
-            background-color:#ff6b00;
-        }
+.prompt__reply:hover {
+    background-color:#ff6b00;
+}
 
-        .prompt__reply:active {
-            background-color:#ff9100;
-        }
+.prompt__reply:active {
+    background-color:#ff9100;
+}

@@ -1,0 +1,184 @@
+/* CSS Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main CSS */
+body {
+    font-family: "Montserrat", "Open Sans", sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    /* background-color: #333; */
+    color: #333;
+    padding: 1em 0;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 50px;
+    height: 100px;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 20px;
+}
+
+.logo img{
+    width: 50px;
+}
+
+.logo h1{
+    padding: 10px;
+}
+
+.hashtag {
+    font-size: 10px;
+    font-weight: 400;
+    margin: 0 20px;
+}
+
+.container {
+    position: relative;
+    /* height: 100vh; */
+}
+
+/* Section containing the comtent */
+.content {
+    height: 100vh;
+    overflow: hidden;
+    /* margin: 20px auto; */
+    padding: 20px;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+/* Bot content */
+.chatUI {
+    /* width: 30%; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin: 20px 0; */
+    margin-right: 5px;
+    align-self: flex-end;
+    
+}
+
+.chat {
+    /* width: 90%; */
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 15px;
+    max-height: 800px;
+}
+
+.message {
+    width: 330px;
+    margin: 10px;
+    padding: 10px;
+    
+}
+
+.message:nth-child(odd) {
+    align-self: flex-start;
+    background-color: #f0f0f0;
+    border-radius: 0px 20px 20px 20px;
+
+
+}
+
+.message:nth-child(even) {
+    align-self: flex-end;
+    background-color: #d0d0d0;
+    border-radius: 20px 0px 20px 20px;
+
+}
+
+.messageText {
+    margin: 0;
+    padding: 0;
+}
+
+.messageTime {
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.upload {
+    width: 110px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+/* Search bar */
+.search-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-end;
+    align-items: center;
+    margin: 20px 0px 20px 0px;
+
+}
+
+.search-bar {
+    display: flex;
+    width: 450px;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, .13);
+    padding: 10px 20px;
+    
+}
+
+.search-bar input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    outline: none;
+    padding: 15px 20px;
+    font-size: 20px;
+    color: #333;
+}
+
+::placeholder {
+    color: #333;
+}
+
+.search-bar button {
+    background-color: transparent;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 0 10px;
+}
