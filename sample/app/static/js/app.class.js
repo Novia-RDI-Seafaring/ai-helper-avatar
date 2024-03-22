@@ -12,7 +12,7 @@ export default class App {
     static _init() {
         // After the window loads, pre-load all content and start the app
         window.addEventListener('load', () => {
-            ModelManager.asyncLoadGltfModels(['Avatar01.glb'])
+            ModelManager.asyncLoadGltfModels(['Avatar02.glb'])
             .then(() => {
                 // Instantiate the application.
                 new App();
