@@ -21,6 +21,7 @@ context = SimpleNamespace()
 # Define common paths
 context.script_directory = os.path.dirname(os.path.abspath(__file__))
 context.static_directory = os.path.join(context.script_directory, 'static')
+context.data_directory = os.path.join(context.script_directory, 'data')
 
 # Load configuration from 'config.ini'
 config_path = os.path.join(context.script_directory, 'config.ini')
