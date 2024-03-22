@@ -6,7 +6,7 @@ export default class Whiteboard {
     // Declare private members
     #whiteboard = null;
     #material = null;
-    #angleDegrees = 180;
+    #angleDegrees = 0;
 
     constructor(context) {
         // Get the avatar GLTF scene
@@ -14,6 +14,7 @@ export default class Whiteboard {
         
         // Add whiteboard and add it to the scene
         this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
+        this.#whiteboard.rotation.x = Math.PI;
         context.scene.add(this.#whiteboard);
         
         // Create an image texture for the white part
