@@ -15,16 +15,60 @@
 
         <link rel="shortcut icon" type="image/ico" href="./images/favicon.png" />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="./css/index.css">
 
         <!-- Import and initialize the JavaScript App class -->
         <script type="module" src="./js/app.class.js"></script>
     </head>
     <body>
-        <div class="prompt">
+        <!-- <div class="prompt">
             <button class="prompt__reply">Reply</button>
-        </div>
-
-        <canvas></canvas>
+        </div> -->
+        <header>
+            <div class="logo">
+                <img src="logo.png" alt="Logo">
+                <h1 id="title">Virtual Assistant</h1>
+            </div>
+            <button id="upload" class="upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload PDF</button>
+            <!-- <div class="hashtag"><h1 id="title">#VirtualSeaTrial</h1></div> -->
+        </header>
+        <main class="container">
+            <div class="content">
+                <div id="chatbot" class="chatUI">
+                    <div class="chat">
+                        <div class="message">
+                            <p class="messageText">Hello</p>
+                            <p class="messageTime">12:00</p>
+                        </div>
+                        <div class="message">
+                            <p class="messageText">How are you?</p>
+                            <p class="messageTime">12:01</p>
+                        </div>
+                        <div class="message">
+                            <p class="messageText">I'm fine</p>
+                            <p class="messageTime">12:02</p>
+                        </div>
+                        <div class="message">
+                            <p class="messageText">Good</p>
+                            <p class="messageTime">12:12</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-section">
+                    <form action="" class="search-bar">
+                        <!-- <textarea id="chat-input" spellcheck="false" placeholder="Ask me something"></textarea> -->
+                        <input type="text" placeholder="Ask me something ..." name="ai">
+                        <button id="send" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+            <canvas></canvas>
+        </main>
     </body>
 </html>
