@@ -103,7 +103,7 @@ class WebServer:
     def _run(self):
         '''The internal method to run the Flask app.'''
 
-        self._socketio.run(self._server, host='127.0.0.1', port=self._port, allow_unsafe_werkzeug=True)
+        self._socketio.run(self._server, host='0.0.0.0', port=self._port, allow_unsafe_werkzeug=True)
 
     def stop_server(self):
         '''Stop the web server by making a shutdown request via HTTP.'''
