@@ -4,10 +4,12 @@ import secrets
 import threading
 import webbrowser
 
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from termcolor import cprint
+
+from searchable_pdf import SearchablePDF
 
 PRINT_COLOR = 'light_blue'
 
@@ -34,6 +36,8 @@ class WebServer:
         # Secure the Flask session with a random secret key
         self._server.config['SECRET_KEY'] = secrets.token_hex(16)
 
+        self.searchable_pdf = SearchablePDF('path/to/the/file.pdf', "the schema as string...")
+
         # Only log errors to console
         log = logging.getLogger('werkzeug')
         log.setLevel(logging.ERROR)
@@ -50,6 +54,12 @@ class WebServer:
         def handle_index():
             return self._server.send_static_file('index.html')
 
+        @self._server.route('/ask', methods=['GET'])
+        def handle_message():
+            query = request.args.get('query', '')  # Default to empty string if not provided
+            result = self.searchable_pdf.query(query)
+            return jsonify(result)
+        
         @self._server.route('/shutdown')
         def handle_shutdown():
             if request.remote_addr == '127.0.0.1':
