@@ -21,8 +21,8 @@ export default class App {
     }
 
     // Timestep min and max seconds
-    static #elapsedSecondsMin = 0.0001;
-    static #elapsedSecondsMax = 1;
+    static #ELAPSED_SECONDS_MIN = 0.0001;
+    static #ELAPSED_SECONDS_MAX = 1;
 
     // Declare private members
     #context = null;
@@ -48,7 +48,7 @@ export default class App {
         this.#avatar = new Avatar(this.#context);
 
         // Create lighting for the scene
-        this.#context.Lighting = new Lighting(this.#context.scene);
+        this.#context.lighting = new Lighting(this.#context);
 
         // For calculating delta time
         this.#lastTime = null;
@@ -78,8 +78,8 @@ export default class App {
         renderer.toneMappingExposure = 1.8;
 
         // Add shadowmap
-        this.#context.renderer.shadowMap.enabled = true;
-        this.#context.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         // Setup main loop
         renderer.setAnimationLoop(this.#update.bind(this));
@@ -88,18 +88,19 @@ export default class App {
         window.addEventListener('resize', this.#handleResize.bind(this));
 
         // Create the main scene object
-        this.#context.scene = new THREE.Scene();
+        const scene = new THREE.Scene();
+        this.#context.scene = scene;
 
         // Add a floor plane that can receive shadows
         const planeGeometry = new THREE.PlaneGeometry(10, 10);
         const planeMaterial = new THREE.MeshStandardMaterial({
             color: 0xaaaaaa,
-            side: THREE.DoubleSide
+            side: THREE.DoubleSide,
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.rotation.x = -Math.PI / 2;
         plane.receiveShadow = true;
-        this.#context.scene.add(plane);
+        scene.add(plane);
 
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
@@ -125,7 +126,7 @@ export default class App {
     // Method called on each frame to update the application's state
     #update(time, frame = null) {
         // Calculate a constrained delta time to avoid extreme values
-        const dt = Math.max(App.#elapsedSecondsMin, Math.min(App.#elapsedSecondsMax,
+        const dt = Math.max(App.#ELAPSED_SECONDS_MIN, Math.min(App.#ELAPSED_SECONDS_MAX,
             this.#lastTime === null ? 0 : (time - this.#lastTime) / 1000));
         this.#lastTime = time;
 

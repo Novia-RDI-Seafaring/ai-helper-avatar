@@ -95,7 +95,7 @@ class WebServer:
     def start_server(self):
         '''Starts the web server on a separate thread for non-blocking operations.'''
 
-        self._server_thread = threading.Thread(target=self._run, daemon=True)
+        self._server_thread = threading.Thread(target=self._run)
         self._server_thread.start()
 
         cprint(f'WebServer: Webserver started at URL http://127.0.0.1:{self._port}', PRINT_COLOR)
