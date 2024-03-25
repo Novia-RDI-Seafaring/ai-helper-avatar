@@ -92,17 +92,6 @@ export default class App {
         const scene = new THREE.Scene();
         this.#context.scene = scene;
 
-        // Add a floor plane that can receive shadows
-        const planeGeometry = new THREE.PlaneGeometry(10, 10);
-        const planeMaterial = new THREE.MeshStandardMaterial({
-            color: 0xaaaaaa,
-            side: THREE.DoubleSide,
-        });
-        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.rotation.x = -Math.PI / 2;
-        plane.receiveShadow = true;
-        scene.add(plane);
-
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
         this.#context.camera.position.set(-.45, 1.6, 1.15)
