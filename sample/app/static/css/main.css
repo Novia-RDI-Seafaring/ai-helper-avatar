@@ -9,23 +9,28 @@
 body {
     font-family: "Montserrat", "Open Sans", sans-serif;
     background-color: #f4f4f4;
-    color: #333;
+    color: #606762;
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    background-image: url("../images/bg2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
 }
 
 /* Header */
 header {
     /* background-color: #333; */
-    color: #333;
+    /* color: #333; */
     padding: 1em 0;
     text-align: center;
     display: flex;
     justify-content: space-between;
     /* margin: 10px 50px; */
-    height: 100px;
+    height: 90px;
     align-items: center;
     background: rgba(242, 242, 242, 0.2); /* 20% opacity */
 }
@@ -42,7 +47,7 @@ header {
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin: 0 20px;
+    margin: 0 10px 0 20px;
 }
 
 .logo img{
@@ -59,6 +64,16 @@ h1{
 .upload_btn {
     margin-right: 10px;
 }
+
+.upload {
+    width: 121px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    background: rgba(242, 242, 242, 0.2);
+    color: #fff;
+}
+
 .hashtag {
     font-size: 10px;
     font-weight: 400;
@@ -81,7 +96,6 @@ h1{
 .content {
     height: 100vh;
     overflow: hidden;
-    /* margin: 20px auto; */
     padding: 20px;
     display: flex;
     flex-flow: column wrap;
@@ -92,19 +106,15 @@ h1{
 
 /* Bot content */
 .chatUI {
-    /* width: 30%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* margin: 20px 0; */
     margin-right: 5px;
     align-self: flex-end;
-    position: relative;
 }
 
 .chat {
-    /* width: 90%; */
     padding-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -118,12 +128,11 @@ h1{
     width: 330px;
     margin: 10px;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .message:nth-child(odd) {
     align-self: flex-start;
-    background-color: #f0f0f0;
     border-radius: 0px 20px 20px 20px;
 
 
@@ -131,7 +140,6 @@ h1{
 
 .message:nth-child(even) {
     align-self: flex-end;
-    background-color: #d0d0d0;
     border-radius: 20px 0px 20px 20px;
 
 }
@@ -146,14 +154,6 @@ h1{
     text-align: right;
 }
 
-.upload {
-    width: 110px;
-    height: 35px;
-    border-radius: 10px;
-    background-color: transparent;
-    background-repeat: no-repeat;
-}
-
 /* Search bar */
 .search-section {
     display: flex;
@@ -161,24 +161,35 @@ h1{
     justify-content: center;
     align-self: flex-end;
     align-items: center;
+    border-radius: 20px;
     margin: 20px 0px 20px 0px;
     position: absolute;
     top: 75%;
-    left: 52%;
+    left: 50%;
     backdrop-filter: blur(10px);
 }
 
 .search-bar {
     display: flex;
-    width: 450px;
-    height: 70px;
+    /* width: 500px; */
+    height: 100px;
     border: 1px solid white;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 3px 4px 4px rgba(0, 0, 0, .13);
     padding: 10px 20px;
-    
 }
+
+.your-element {
+    /* Define the gradient */
+    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    border: 1px solid;
+    background-clip: border-box;
+    /* Use this to prevent the background from extending to the outside of the border */
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
 
 .search-bar input {
     flex: 1;
@@ -186,8 +197,8 @@ h1{
     background: transparent;
     outline: none;
     padding: 15px 20px;
-    font-size: 20px;
-    color: #333;
+    font-size: 40px;
+    color: #fff;
 }
 
 ::placeholder {
@@ -201,7 +212,10 @@ h1{
     border: 1px solid white;
     border-radius: 10px;
     cursor: pointer;
-    margin: 0 10px;
+    /* margin: 0 10px;
+    width: 70px;
+    height: 70px;
+    align-self: center; */
 }
 
 .fa-search {
