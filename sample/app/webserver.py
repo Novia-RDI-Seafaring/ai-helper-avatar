@@ -37,7 +37,6 @@ class WebServer:
             json_schema_string
         )
 
-
         self._server_thread = None
 
         self._port = self._context.config.getint('webserver', 'port')
