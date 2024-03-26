@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 
 # test with a script to verify that the .env file is accessable
 load_dotenv()
-api_key = os.getenv('OPENAI_API_KEY')
 
 # Check Python version to ensure compatibility
 class UnsupportedVersion(Exception):
