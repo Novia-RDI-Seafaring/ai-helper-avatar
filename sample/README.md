@@ -10,7 +10,8 @@ We need to also install the other library.
 
 The OPENAI_API_KEY needs to be an environemtnal variable, and easy way to do it is by rynning the server like this:
 
-```OPENAI_API_KEY='sk-sdfsdfE0u' python sample/app/main.py```
+add it to your .env file (in sample/app)
+```cp env.example.txt .env```
 
 Then you can query the PDF via the GET endpoint
 
