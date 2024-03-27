@@ -1,52 +1,52 @@
-// document.addEventListener("DOMContentLoaded", function() {
-//     var form = document.querySelector(".search-section .search-bar");
-//     var input = form.querySelector("input[name='ai']");
-//     var timeline = document.getElementById("loadingTimeline");
+document.addEventListener('DOMContentLoaded', function() {
+    var sendButton = document.getElementById('send');
+    var inputField = document.querySelector('input[name="ai"]');
+    var chatUI = document.querySelector('.chat');
+    var loadingIndicator = document.getElementById('loadingIndicator');
 
-//     form.addEventListener("submit", function(event) {
-//         event.preventDefault(); // Prevent form from submitting normally
-//         timeline.classList.add("visible"); // Show the loading timeline
+    sendButton.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
 
-//         // Simulate a loading process (e.g., fetching data)
-//         setTimeout(function() {
-//             timeline.classList.remove("visible"); // Hide timeline after loading is done
-//             // Here, you would typically handle the actual form submission,
-//             // like sending the input value to your server or processing it further.
-//             console.log("Processed query:", input.value);
-//         }, 2000); // Adjust this timeout to match your actual loading time
-//     });
-// });
+        var userInput = inputField.value;
+        if (userInput.trim() === '') return; // Do not send empty queries
 
-document.addEventListener("DOMContentLoaded", function() {
-    var form = document.querySelector(".search-section .search-bar");
-    var timeline = document.getElementById("loadingTimeline");
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
 
-    form.addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent form from submitting normally
+        // Display the user's query in the chat
+        displayMessage(userInput, 'outgoing');
 
-        // Show the loading timeline
-        timeline.classList.add("visible");
-
-        // Example asynchronous operation: Fetching data from an API
-        // This is where you would typically include your actual data fetching logic
-        // For demonstration, I'm using a placeholder for an asynchronous fetch operation
-        fetch('https://your-api-endpoint.com/data')
-            .then(response => response.json())
-            .then(data => {
-                console.log("Data fetched:", data);
-                // Process your data here
-
-                // Hide the timeline after data is fetched and processed
-                timeline.classList.remove("visible");
+        // Send the request to the server
+        var url = '/ask?query=' + encodeURIComponent(userInput);
+        var myRequest = new Request(url);
+        fetch(myRequest)
+            .then((response) => {
+                return response.json();
             })
-            .catch(error => {
-                console.error("Error fetching data:", error);
-                // Hide the timeline even if there's an error
-                timeline.classList.remove("visible");
+            .then((data) => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                
+                displayMessageHistory(data.message_history);
             });
 
-        // Note: Replace the URL 'https://your-api-endpoint.com/data' with your actual API endpoint
+        inputField.value = ''; // Clear the input field
     });
+
+    function displayMessage(message, type) {
+        var messageElement = document.createElement('div');
+        messageElement.className = 'message ' + type; // Different classes for styling incoming/outgoing messages
+        messageElement.innerHTML = `<p class="messageText">${message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+        chatUI.appendChild(messageElement);
+    }
+
+    function displayMessageHistory(messageHistory) {
+        var lastMessage = messageHistory[messageHistory.length - 1]; // Get the last message from the history
+        var type = lastMessage.is_user ? 'outgoing' : 'incoming'; // Determine the type of message
+
+        var messageElement = document.createElement('div');
+        messageElement.className = 'message ' + type;
+        messageElement.innerHTML = `<p class="messageText">${lastMessage.message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+        chatUI.appendChild(messageElement);
+    }
 });
-
-

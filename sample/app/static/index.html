@@ -27,9 +27,6 @@
         <script type="module" src="./js/app.class.js"></script>
     </head>
     <body>
-        <!-- <div class="prompt">
-            <button class="prompt__reply">Reply</button>
-        </div> -->
         <header>
             <div class="head">
                 <div class="logo">
@@ -37,44 +34,20 @@
                 </div>
                 <h1 id="title">Virtual Assistant</h1>
             </div>
-            <!-- <div class="api_btn">
-                <label for="apiKeyInput">Paste your API Key:</label>
-                <input type="text" id="apiKeyInput" class="api_input" placeholder="Enter API Key here">
-                <button id="saveApiKey" class="upload">Save API Key</button>
-                <div id="saveResult"></div>
-            </div> -->
             <div class="upload_btn">
                 <button id="upload" class="upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload PDF</button>
             </div>
-            <!-- <div class="hashtag"><h1 id="title">#VirtualSeaTrial</h1></div> -->
         </header>
         <main class="container">
             <div class="content">
                 <div id="chatbot" class="chatUI">
-                    <!-- Loading Timeline Added Here, inside chatbot container -->
-                    <div id="loadingTimeline" class="loading-timeline"></div>
+                    <div id="loadingIndicator" class="loading-indicator"></div>
                     <div class="chat">
-                        <div class="message">
-                            <p class="messageText">Hello</p>
-                            <p class="messageTime">12:00</p>
-                        </div>
-                        <div class="message">
-                            <p class="messageText">How are you?</p>
-                            <p class="messageTime">12:01</p>
-                        </div>
-                        <div class="message">
-                            <p class="messageText">I'm fine</p>
-                            <p class="messageTime">12:02</p>
-                        </div>
-                        <div class="message">
-                            <p class="messageText">Good</p>
-                            <p class="messageTime">12:12</p>
-                        </div>
+
                     </div>
                 </div>
                 <div class="search-section">
-                    <form action="" class="search-bar">
-                        <!-- <textarea id="chat-input" spellcheck="false" placeholder="Ask me something"></textarea> -->
+                    <form action="" method="post" class="search-bar">
                         <input type="text" placeholder="Ask me something ..." name="ai">
                         <button id="send" type="submit"><img src="images/search_img.png" class="search_img"></button>
                         <!-- <button id="send" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button> -->
@@ -83,5 +56,6 @@
             </div>
             <canvas></canvas>
         </main>
+        <script src="js/script.js"></script>    
     </body>
 </html>
