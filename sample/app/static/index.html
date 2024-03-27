@@ -23,8 +23,7 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="./css/index.css">
 
-        <!-- Import and initialize the JavaScript App class -->
-        <script type="module" src="./js/app.class.js"></script>
+
     </head>
     <body>
         <header>
@@ -41,8 +40,10 @@
         <main class="container">
             <div class="content">
                 <div id="chatbot" class="chatUI">
-                    <div id="loadingIndicator" class="loading-indicator"></div>
-                    <div class="chat">
+                    <div class="loading-state">
+                        <div  id="loadingState"  class="loading"></div>
+                    </div>
+                    <div id="chat" class="chat">
 
                     </div>
                 </div>
@@ -56,6 +57,9 @@
             </div>
             <canvas></canvas>
         </main>
-        <script src="js/script.js"></script>    
+        <!-- Import and initialize the JavaScript App class -->
+        <script type="module" src="./js/app.class.js"></script>
+        <!--import the JavaScript here to not slow loading of the interface -->
+        <script src="js/script.js"></script>
     </body>
 </html>
