@@ -213,20 +213,32 @@ h1{
     font-size: 20px;
 } 
 
-.loading-timeline {
-    position: absolute;
-    top: 0; /* Position at the top of chatbot */
-    left: 0;
-    right: 0;
-    height: 5px;
-    background-color: #3498db;
-    width: 0%;
-    transition: width 2s;
-    visibility: hidden; /* Initially hidden */
+.loading-state {
+    display: none; /* Hide the loading state by default */
+    position: absolute; /* Position it relative to its closest positioned ancestor */
+    top: 50%;
+    left: 50%;
+    width: 25%;
+    height: 25%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.loading-timeline.visible {
-    visibility: visible;
-    width: 100%; /* Expand to full width */
+.loading {
+    display: none;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid #ddd;
+    border-top-color: orange;
+    animation: loading 1s linear infinite;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
+@keyframes loading {
+    to {
+      transform: rotate(360deg);
+    }
+}
