@@ -112,6 +112,8 @@ h1{
     align-items: center;
     margin-right: 5px;
     align-self: flex-end;
+    height: 400px;
+    overflow-y: auto;
 }
 
 .chat {
@@ -179,17 +181,6 @@ h1{
     box-shadow: 3px 4px 4px rgba(0, 0, 0, .13);
     padding: 10px 20px;
 }
-
-.your-element {
-    /* Define the gradient */
-    background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-    border: 1px solid;
-    background-clip: border-box;
-    /* Use this to prevent the background from extending to the outside of the border */
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-}
-
 
 .search-bar input {
     flex: 1;
