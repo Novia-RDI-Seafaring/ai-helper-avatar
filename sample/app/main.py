@@ -1,17 +1,14 @@
 import configparser
+import json
 import os
 import sys
 import time
 
+from dotenv import load_dotenv
 from types import SimpleNamespace
 
+from pdf_data_extractor import SearchablePDF
 from webserver import WebServer
-
-import os
-from dotenv import load_dotenv
-
-# test with a script to verify that the .env file is accessable
-load_dotenv()
 
 # Check Python version to ensure compatibility
 class UnsupportedVersion(Exception):
@@ -20,6 +17,9 @@ class UnsupportedVersion(Exception):
 MIN_VERSION, VERSION_LESS_THAN = (3, 5), (4, 0)
 if sys.version_info < MIN_VERSION or sys.version_info >= VERSION_LESS_THAN:
     raise UnsupportedVersion('requires Python %s,<%s' % ('.'.join(map(str, MIN_VERSION)), '.'.join(map(str, VERSION_LESS_THAN))))
+
+# Test with a script to verify that the .env file is accessable
+load_dotenv()
 
 # Initialize a simple namespace object to hold the application context
 context = SimpleNamespace()
@@ -34,6 +34,22 @@ config_path = os.path.join(context.script_directory, 'config.ini')
 
 context.config = configparser.ConfigParser()
 context.config.read(config_path)
+
+# Create searchable PDF instance
+
+pdf_path = os.path.join(context.static_directory, 'demo_data/he-specification.pdf')
+with open(pdf_path) as f:
+    json_value_string = json.dumps(json.load(f))
+
+json_path = os.path.join(context.static_directory, 'demo_data/he-specification_schema.json')
+with open(json_path) as f:    
+    json_schema_string = json.dumps(json.load(f))
+
+context.searchable_pdf = SearchablePDF(
+    pdf_path,
+    json_value_string,
+    json_schema_string
+)
 
 # Create the webserver
 context.webserver = WebServer(context)
