@@ -6,6 +6,9 @@ import time
 
 from types import SimpleNamespace
 
+from dotenv import load_dotenv
+load_dotenv() 
+
 from pdf_data_extractor import SearchablePDF
 from webserver import WebServer
 
