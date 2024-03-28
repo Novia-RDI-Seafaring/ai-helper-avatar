@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Web app example</title>
+        <title>Virtual Assistant</title>
 
         <meta charset="utf-8" />
 
@@ -18,10 +18,12 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
         <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="./css/index.css">
+
+        <link rel="stylesheet" href="./css/main.css">
+
+        <!-- Import and initialize the JavaScript App class -->
+        <script type="module" src="./js/app.class.js"></script>
     </head>
     <body>
         <header>
@@ -31,34 +33,31 @@
                 </div>
                 <h1 id="title">Virtual Assistant</h1>
             </div>
-            <div class="upload_btn">
+
+            <div class="upload_button">
                 <button id="upload" class="upload"><i class="fa fa-upload" aria-hidden="true"></i>&nbsp; Upload PDF</button>
             </div>
         </header>
-        <main class="container">
-            <div id="whiteboard" style="display:none; position: relative;"><img src="demo_data/he-specification.jpg"></div>
-            <div class="content">
-                <div id="chatbot" class="chatUI">
-                    <div class="loading-state">
-                        <div  id="loadingState"  class="loading"></div>
-                    </div>
-                    <div id="chat" class="chat">
 
-                    </div>
-                </div>
-                <div class="search-section">
-                    <form action="" method="post" class="search-bar">
-                        <input type="text" placeholder="Ask me something ..." name="ai">
-                        <button id="send" type="submit"><img src="images/search_img.png" class="search_img"></button>
-                        <!-- <button id="send" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button> -->
-                    </form>
+        <main class="container">
+            <canvas></canvas>
+            
+            <div id="whiteboard"><img src="demo_data/he-specification.jpg"></div>
+
+            <div class="chat-ui">
+                <div class="chat"></div>
+
+                <div class="loading-state">
+                    <div class="loading"></div>
                 </div>
             </div>
-            <canvas></canvas>
+
+            <div class="search-section">
+                <form action="" method="post" class="search-bar">
+                    <input type="text" placeholder="Ask me something..." name="ai">
+                    <button class="send" type="submit"><img src="./images/search_image.png" class="search-image"></button>
+                </form>
+            </div>
         </main>
-        <!-- Import and initialize the JavaScript App class -->
-        <script type="module" src="./js/app.class.js"></script>
-        <!--import the JavaScript here to not slow loading of the interface -->
-        <script src="js/script.js"></script>
     </body>
 </html>
