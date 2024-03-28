@@ -61,3 +61,61 @@ document.addEventListener('DOMContentLoaded', function() {
         chat.scrollTop = chat.scrollHeight;
     }
 });
+
+const wb = {
+
+    show: () => {
+        const whiteboard = document.getElementById("whiteboard");
+        whiteboard.style.display = "block";
+    },
+
+    hide: () => {
+        const whiteboard = document.getElementById("whiteboard");
+        whiteboard.style.display = "block";
+    },
+
+    rotate: (degrees) => {
+        const whiteboard = document.getElementById("whiteboard");
+        whiteboard.style.transform = "rotate("+degrees+"deg)";
+    },
+
+    highlight: (bboxes, degrees) => {
+        wb.clear();
+        for (let i in bboxes) {
+            whiteboard.mark(bboxes[i], "mark_" + i);
+        }
+        wb.rotate(degrees);
+    },
+
+    mark: (bbox, idstr) => {
+        // [66.5905532836914, 84.10101318359375, 78.5905532836914, 90.18304443359375]
+
+        const [x, y, width, height] = bbox;
+
+        // Find the container by its ID
+        const whiteboard = document.getElementById("whiteboard");
+      
+        
+        // Create the box element
+        const box = document.createElement('div');
+        box.id = idstr;
+        box.style.position = 'absolute';
+        box.style.left = `${x}px`;
+        box.style.top = `${y}px`;
+        box.style.height = `${height - y}px`;
+        box.style.width = `${width - x}px`;
+        box.classList.add('mark');
+        whiteboard.appendChild(box);
+        setTimeout(() => {
+            document.getElementById(idstr).classList.add('show');
+        }, 100);        
+
+    },
+
+    clear: () => {
+        const whiteboard = document.getElementById("whiteboard");
+        const boxes = whiteboard.querySelectorAll('.mark');
+        boxes.forEach(box => box.remove());
+    }
+    
+}
