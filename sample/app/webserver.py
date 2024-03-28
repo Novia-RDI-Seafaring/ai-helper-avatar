@@ -9,8 +9,6 @@ from flask import Flask, request, abort, jsonify
 from flask_cors import CORS
 from termcolor import cprint
 
-from pdf_data_extractor import SearchablePDF
-
 PRINT_COLOR = 'light_blue'
 
 class WebServer:
