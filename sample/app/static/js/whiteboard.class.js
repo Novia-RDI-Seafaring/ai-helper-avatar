@@ -40,7 +40,7 @@ export default class Whiteboard {
         const textureLoader = new THREE.TextureLoader();
         
         textureLoader.load(
-            './pdf_image', // './images/pdf.png',
+            './pdf_image',
             texture => {
                 texture.repeat.set(-1, 1);
                 texture.offset.setX(1);
