@@ -44,8 +44,11 @@ export default class App {
         // Setup Three.JS renderer and scene
         this.#setupThreeJs();
 
+        // Create the user prompt
+        this.#context.prompt = new Prompt(this.#context);
+        
         // Create an avatar
-        this.#avatar = new Avatar(this.#context);
+        this.#context.avatar = new Avatar(this.#context);
         
         // Create the whiteboard
         this.#context.whiteboard = new Whiteboard(this.#context);
@@ -127,7 +130,7 @@ export default class App {
         this.#context.totalSeconds += dt;
         
         // Update avatar
-        this.#avatar.update(this.#context);
+        this.#context.avatar.update(this.#context);
 
         // Update whiteboard
         this.#context.whiteboard.update(this.#context);
