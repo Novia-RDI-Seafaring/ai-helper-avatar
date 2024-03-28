@@ -4,7 +4,6 @@ import os
 import sys
 import time
 
-from dotenv import load_dotenv
 from types import SimpleNamespace
 
 from pdf_data_extractor import SearchablePDF
@@ -17,9 +16,6 @@ class UnsupportedVersion(Exception):
 MIN_VERSION, VERSION_LESS_THAN = (3, 5), (4, 0)
 if sys.version_info < MIN_VERSION or sys.version_info >= VERSION_LESS_THAN:
     raise UnsupportedVersion('requires Python %s,<%s' % ('.'.join(map(str, MIN_VERSION)), '.'.join(map(str, VERSION_LESS_THAN))))
-
-# Test with a script to verify that the .env file is accessable
-load_dotenv()
 
 # Initialize a simple namespace object to hold the application context
 context = SimpleNamespace()
@@ -38,11 +34,13 @@ context.config.read(config_path)
 # Create searchable PDF instance
 
 pdf_path = os.path.join(context.static_directory, 'demo_data/he-specification.pdf')
-with open(pdf_path) as f:
+json_path = os.path.join(context.static_directory, 'demo_data/he-specification.json')
+json_schema_path = os.path.join(context.static_directory, 'demo_data/he-specification_schema.json')
+
+with open(json_path) as f:
     json_value_string = json.dumps(json.load(f))
 
-json_path = os.path.join(context.static_directory, 'demo_data/he-specification_schema.json')
-with open(json_path) as f:    
+with open(json_schema_path) as f:    
     json_schema_string = json.dumps(json.load(f))
 
 context.searchable_pdf = SearchablePDF(
