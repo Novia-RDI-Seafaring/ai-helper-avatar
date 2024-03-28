@@ -244,3 +244,32 @@ h1{
       transform: rotate(360deg);
     }
 }
+
+div#whiteboard {
+    width: 770px;
+    height: 550px;
+    display: block;
+    border: 10px solid black;
+    transform: rotate(90deg);
+    position: fixed;
+    top: 20%;
+    left: 0;
+    transition: transform 2s ease-in;
+}
+
+div#whiteboard > img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+div#whiteboard > .mark {
+    display: block;
+    transition: opacity 1s;
+    opacity: 0;
+    background: yellow;
+}
+
+
+div#whiteboard > .mark.show {
+    opacity: 1;
+}
