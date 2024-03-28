@@ -50,8 +50,8 @@ class WebServer:
         def handle_message():
             # Default to empty string if not provided
             query = request.args.get('query', '')
+            cprint(f'WebServer: we are asking: {query}', PRINT_COLOR)
 
-            print(f'we are asking: {query}')
             result = context.searchable_pdf.query(query)
             return jsonify(result)
 
