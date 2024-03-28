@@ -131,7 +131,7 @@ export default class App {
         this.#context.whiteboard.update(this.#context);
 
         // Update fly controls
-        this.#flyControls.update(dt);
+        // this.#flyControls.update(dt);
 
         // Render the scene using the camera
         this.#context.renderer.render(this.#context.scene, this.#context.camera);
