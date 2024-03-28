@@ -136,7 +136,6 @@ h1 {
 .message.incoming {
     align-self: flex-start;
     border-radius: 0px 20px 20px 20px;
-    margin-right: 100px;
 }
 
 .message.outgoing {
