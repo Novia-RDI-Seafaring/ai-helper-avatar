@@ -2,6 +2,7 @@ import ModelManager from './modelmanager.class.js';
 
 import Avatar from './avatar.class.js';
 import Lighting from './lighting.class.js';
+import Prompt from './prompt.class.js';
 import Whiteboard from './whiteboard.class.js';
 
 import * as THREE from './lib/three.js/three.module.js';
@@ -27,6 +28,7 @@ export default class App {
     // Declare private members
     #context = null;
     #avatar = null;
+    #prompt = null;
     #flyControls = null;
     #lastTime = null;
     #helper = null;
