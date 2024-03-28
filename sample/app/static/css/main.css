@@ -5,69 +5,84 @@
     padding: 0;
 }
 
-/* Main CSS */
 body {
-    font-family: "Montserrat", "Open Sans", sans-serif;
     background-color: #f4f4f4;
-    color: #606762;
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
     background-image: url("../images/bg2.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow: hidden;
+    color: #606762;
+    font-family: "Montserrat", "Open Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select:none;
+        -ms-user-select:none;
+            user-select:none;
 }
 
-/* Header */
+html {
+    height: 100%;
+}
+
 header {
-    padding: 1em 0;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    height: 90px;
     align-items: center;
     background: rgba(242, 242, 242, 0.2); /* 20% opacity */
+    display: flex;
+    height: 90px;
+    justify-content: space-between;
+    padding: 1em 0;
+    text-align: center;
+}
+
+canvas {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
 }
 
 .head {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .logo {
     display: flex;
     font-size: 10px;
     font-weight: 400;
-    text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0 10px 0 20px;
+    text-transform: uppercase;
 }
 
-.logo img{
+.logo img {
     width: 50px;
 }
 
-h1{
+h1 {
     font-family: "Montserrat", "Open Sans", sans-serif;
     font-weight: 400;
     color: #fff;
     font-size: 24px;
 }
 
-.upload_btn {
+.upload_button {
     margin-right: 10px;
 }
 
 .upload {
-    width: 121px;
-    height: 36px;
-    border-radius: 10px;
-    border: 1px solid #fff;
     background: rgba(242, 242, 242, 0.2);
+    border: 1px solid #fff;
+    border-radius: 10px;
     color: #fff;
+    height: 36px;
+    width: 121px;
 }
 
 .hashtag {
@@ -76,139 +91,105 @@ h1{
     margin: 0 20px;
 }
 
-.api_input {
-    padding: 10px;
-    border: 1px solid #000;
-    border-radius: 10px;
-    background: transparent;
-}
-
 .container {
-    position: relative;
-    /* height: 100vh; */
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 90px;
 }
 
-/* Section containing the comtent */
-.content {
-    height: 100vh;
-    overflow: hidden;
-    padding: 20px;
-    display: flex;
-    flex-flow: column wrap;
-    flex-direction: column;
-    width: 100%;
-    position: relative;
-}
-
-/* Bot content */
-.chatUI {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 5px;
-    align-self: flex-end;
-    height: 400px;
+.chat-ui {
+    bottom: 150px;
+    max-width: 450px;
+    min-width: 350px;
     overflow-y: auto;
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    width: 30%;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.chatUI::-webkit-scrollbar {
+.chat-ui::-webkit-scrollbar {
     display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.chatUI {
+.chat-ui {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
 
 .chat {
-    padding-bottom: 50px;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
-    margin: 0 auto;
-    border-radius: 15px;
-    max-height: 800px;
 }
 
 .message {
-    width: 330px;
+    background: rgba(255, 255, 255, 0.4);
     margin: 10px;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.4);
+    width: 330px;
 }
 
-.message:nth-child(odd) {
+.message.incoming {
     align-self: flex-start;
     border-radius: 0px 20px 20px 20px;
-
-
+    margin-right: 100px;
 }
 
-.message:nth-child(even) {
+.message.outgoing {
     align-self: flex-end;
     border-radius: 20px 0px 20px 20px;
-
 }
 
-.messageText {
+.message-text {
     margin: 0;
     padding: 0;
 }
 
-.messageTime {
+.message-time {
     font-size: 0.8em;
     text-align: right;
 }
 
-/* Search bar */
 .search-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: flex-end;
-    align-items: center;
+    backdrop-filter: blur(10px);
     border-radius: 20px;
+    bottom: 20px;
     margin: 20px 0px 20px 0px;
     position: absolute;
-    top: 75%;
-    left: 50%;
-    backdrop-filter: blur(10px);
+    right: 20px;
 }
 
 .search-bar {
-    display: flex;
-    height: 100px;
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid white;
     border-radius: 20px;
-    background: rgba(255, 255, 255, 0.2);
     box-shadow: 3px 4px 4px rgba(0, 0, 0, .13);
+    display: flex;
+    height: 100px;
     padding: 10px 20px;
 }
 
 .search-bar input {
-    flex: 1;
-    border: 0;
     background: transparent;
+    border: 0;
+    color: #fff;
+    flex: 1;
+    font-size: 40px;
     outline: none;
     padding: 15px 20px;
-    font-size: 40px;
-    color: #fff;
 }
-
-/* ::placeholder {
-    color: #333;
-} */
 
 .search-bar button {
     background-color: transparent;
-    color: #fff;
-    padding: 10px 20px;
     border: 1px solid white;
     border-radius: 10px;
+    color: #fff;
     cursor: pointer;
+    padding: 10px 20px;
 }
 
 .fa-search {
@@ -217,25 +198,17 @@ h1{
 
 .loading-state {
     display: none; /* Hide the loading state by default */
-    position: absolute; /* Position it relative to its closest positioned ancestor */
-    top: 50%;
-    left: 50%;
-    width: 25%;
-    height: 25%;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px auto;
+    width: 50%;
 }
 
 .loading {
-    display: none;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 10px solid #ddd;
-    border-top-color: orange;
     animation: loading 1s linear infinite;
+    border: 10px solid #ddd;
+    border-radius: 50%;
+    border-top-color: orange;
+    height: 100px;
+    width: 100px;
     /* background-color: rgba(0, 0, 0, 0.3); */
 }
 
@@ -268,7 +241,6 @@ div#whiteboard > .mark {
     opacity: 0;
     background: yellow;
 }
-
 
 div#whiteboard > .mark.show {
     opacity: 1;
