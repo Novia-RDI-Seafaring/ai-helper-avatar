@@ -33,6 +33,7 @@ export default class Whiteboard {
         a = (a + Math.PI) % (Math.PI * 2) - Math.PI;
 
         this.#whiteboard.rotation.z += a * t;
+        this.#whiteboard.rotation.y = -0.1;
     }
     
     _loadPdf() {
