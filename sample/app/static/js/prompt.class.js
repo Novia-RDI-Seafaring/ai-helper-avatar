@@ -21,8 +21,9 @@ export default class Prompt {
 
             // Show loading indicator
             loadingIndicator.style.display = 'block';
-            // TODO: Show the loading indicator (current one not necessary, 
-            // but it's a good practice to show the user that something is happening in the background)
+
+            // Start avatar thinking animation
+            context.avatar.startThinking(context);
 
             // Send the request to the server
             const url = `/ask?query=${encodeURIComponent(userInput)}`;
@@ -33,15 +34,19 @@ export default class Prompt {
                 })
                 .then(data => {
                     this.#displayMessageHistory(data.message_history);
+
+                    context.avatar.handleMessage(data);
                 })
                 .catch(e => {
                     console.error(e);
-                    
+
+                    context.avatar.startIdling();
+
                     this.#displayMessage('There was an error reading the message', 'error');
                 })
                 .finally(() => {
                     // Hide loading indicator
-                    loadingIndicator.style.display = 'none';                    
+                    loadingIndicator.style.display = 'none';
                 });
 
             // Clear the input field
@@ -58,7 +63,7 @@ export default class Prompt {
         messageElement.className = `message ${type}`;
         messageElement.innerHTML = `<p class="messageText">${message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
         chat.appendChild(messageElement);
-        
+
         // Scroll to the bottom of the chat window
         chatUI.scrollTop = chatUI.scrollHeight;
     }
