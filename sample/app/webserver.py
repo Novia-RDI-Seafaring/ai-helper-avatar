@@ -22,22 +22,7 @@ class WebServer:
     def __init__(self, context):
         self._context = context
 
-        print(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.pdf')))
 
-        with open(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification_schema.json'))) as user_file:
-            file_contents = user_file.read()
-        json_value_string = json.dumps(json.loads(file_contents))
-        
-        with open(str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.json'))) as json_schema_file:
-            json_schema_contents = json_schema_file.read()            
-            json_schema_string = json.dumps(json.loads(json_schema_contents))
-
-        # Create searchable PDF instance
-        self._searchable_pdf = SearchablePDF(
-            str(os.path.join(os.path.dirname(__file__), 'static/demo_data/he-specification.pdf')),
-            json_value_string,
-            json_schema_string
-        )
         # print("This is from the Webserver ", self._searchable_pdf.pdf.image)
         self._server_thread = None
 
@@ -59,20 +44,13 @@ class WebServer:
         # Only log errors to console
         # HTTP route handlers
         
-        print("Registering /test route")
-        @self._server.route('/test')
-        def test_route():
-            print("Accessing /test route")
-            return "Test route works!"
-
-
         @self._server.route('/')
         def handle_index():
             return self._server.send_static_file('index.html')
         
         @self._server.route('/pdf_image')
         def pdf_image():
-            img = self._searchable_pdf.pdf.image
+            img = context.searchable_pdf.pdf.image
             img_io = BytesIO()
             img.save(img_io, 'PNG')
             img_io.seek(0)
