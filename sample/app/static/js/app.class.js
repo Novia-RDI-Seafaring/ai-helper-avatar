@@ -40,16 +40,16 @@ export default class App {
             elapsedSeconds: 0,
             totalSeconds: 0,
         };
-        
+
         // Setup Three.JS renderer and scene
         this.#setupThreeJs();
 
-        // Create the user prompt
+        // Create the prompt
         this.#context.prompt = new Prompt(this.#context);
-        
+
         // Create an avatar
         this.#context.avatar = new Avatar(this.#context);
-        
+
         // Create the whiteboard
         this.#context.whiteboard = new Whiteboard(this.#context);
 
@@ -61,6 +61,36 @@ export default class App {
 
         // Initial resize
         this.#handleResize();
+
+        // Simulate messages
+        /*setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
+            status: 'success',
+            focus_point: [0.9, 0.1],
+            direction: 180,
+        }), 3000);
+
+        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
+            status: 'success',
+            focus_point: [0.2, 0.2],
+            direction: 90,
+        }), 6000);
+
+        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
+            status: 'success',
+            focus_point: [0.1, 0.9],
+            direction: null,
+        }), 9000);
+
+        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
+            status: 'success',
+            focus_point: [0.3, 0.5],
+            direction: 0,
+        }), 12000);
+
+        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
+            status: 'success',
+            direction: null,
+        }), 15000);*/
     }
 
     #setupThreeJs() {
@@ -100,7 +130,7 @@ export default class App {
         // Create a typical perspective camera
         this.#context.camera = new THREE.PerspectiveCamera(75, 1, 0.1, 10);
         this.#context.camera.position.set(-.45, 1.6, 1.15)
-        this.#context.camera.rotation.set(-.10, 0, 0);  
+        this.#context.camera.rotation.set(-.10, 0, 0);
 
         // Create fly controls for easier debugging
         this.#flyControls = new FlyControls(this.#context.camera, renderer.domElement);
@@ -128,7 +158,7 @@ export default class App {
 
         this.#context.elapsedSeconds = dt;
         this.#context.totalSeconds += dt;
-        
+
         // Update avatar
         this.#context.avatar.update(this.#context);
 

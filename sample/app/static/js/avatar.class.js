@@ -12,6 +12,8 @@ export default class Avatar {
     #mixer = null;
     #playingAction = null;
     #pointing = false;
+    #pointUV = new THREE.Vector2();
+    #stillThinking = false;
 
     constructor(context) {
         // Get the avatar GLTF scene
@@ -33,10 +35,15 @@ export default class Avatar {
 
         // Create an animation mixer for the rig
         this.#mixer = new THREE.AnimationMixer(this.#rig);
-        
+        this.#mixer.addEventListener('finished', e => {
+            if (e.action.finishedCallback !== null) {
+                e.action.finishedCallback();
+            }
+        });
+
         // Add human inverse kinematics
         this.#ik = new HumanIK(context, this.#rig);
-        
+
         // Schedule animations
         this.playAnimation('Welcome');
     }
@@ -45,17 +52,52 @@ export default class Avatar {
         // Update action clip (animation)
         this.#mixer.update(context.elapsedSeconds);
 
-        // Update IK
+        // Smoothly enable/disable inverse kinematics
         if (this.#pointing) {
-            this.#ik.ikFactor = Math.min(1, this.#ik.ikFactor + context.elapsedSeconds * 0.5);
+            this.#ik.ikFactor = Math.min(1, this.#ik.ikFactor + context.elapsedSeconds * 2);
         } else {
-            this.#ik.ikFactor = Math.max(0, this.#ik.ikFactor - context.elapsedSeconds);
+            this.#ik.ikFactor = Math.max(0, this.#ik.ikFactor - context.elapsedSeconds * 2);
         }
+
+        if (this.#ik.ikFactor > 0) {
+            // Get world point position
+            context.whiteboard.getImageWorldPosition(this.#pointUV, -0.1, this.#ik.ikTarget.position);
+
+            // Convert world to a local point position
+            this.#ik.ikTarget.parent.worldToLocal(this.#ik.ikTarget.position);
+        }
+
+        // Update IK
         this.#ik.update(context);
     }
-    
-    // Handle answer
-    handleAnswer(context, data) {
+
+    startThinking(context) {
+        // Clear pointing
+        this.#pointing = false;
+
+        // Clear whiteboard focus
+        context.whiteboard.clearFocus();
+
+        // Play a random thinking animation
+        this.#stillThinking = true;
+        this.playAnimation(`Thinking0${Math.floor(Math.random() * 2) + 1}`, 0.5, false, 1, () => {
+            if (this.#stillThinking) {
+                this.playAnimation('Idle03', 0.5, true);
+            }
+        });
+    }
+
+    startIdling() {
+        this.#stillThinking = false;
+        this.playAnimation(`Idle0${Math.floor(Math.random() * 2) + 1}`, 0.5, false, 1, () => {
+            this.playAnimation('Idle03', 0.5, true);
+        });
+    }
+
+    // Handle message
+    async handleMessage(context, data) {
+        this.#stillThinking = false;
+
         if (data.status !== 'success') {
             throw new Error(`Error calling API: ${data.status}`);
         }
@@ -63,61 +105,81 @@ export default class Avatar {
         // Check if whiteboard needs to spin
         const spin = data.direction !== null && data.direction !== context.whiteboard.getAngleDegrees();
 
+        // Clear pointing
         let pointingLast = this.#pointing;
         this.#pointing = false;
+
+        // Clear whiteboard focus
+        context.whiteboard.clearFocus();
+
+        // Stop pointing
+        if (pointingLast) {
+            this.playAnimation('Idle03');
+
+            await Avatar.#wait(1000);
+        }
 
         // Spin whiteboard
         if (spin) {
             this.playAnimation('WhiteboardCW');
-            
-            setTimeout(() => {
-                context.whiteboard.spin(data.direction);
-            }, 3000);
-        }
-        
-        // Wait for whiteboard to spin
-        setTimeout(() => {
-            if (data.focus_point !== null) {
-                // Start pointing at whiteboard
-                this.#pointing = true;                
-                
-                // Get world point position
-                context.whiteboard.getImageWorldPosition(data.focus_point[0], data.focus_point[1], -0.1, this.#ik.ikTarget.position);
-                
-                // Convert world to a local point position
-                this.#ik.ikTarget.parent.worldToLocal(this.#ik.ikTarget.position);
 
-                // Play point animation
-                this.playAnimation('Idlepoint');
-            } else {
-                // Start random idle animation
-                this.playAnimation(`Idea0${Math.floor(Math.random() * 3) + 1}`);
-            }
-        }, 3000 * spin);         
+            await Avatar.#wait(100);
+
+            context.whiteboard.spin(data.direction);
+
+            await Avatar.#wait(1000);
+        }
+
+        if (data.focus_point) {
+            // Start pointing
+            this.#pointing = true;
+
+            this.#pointUV.set(data.focus_point[0], data.focus_point[1]);
+
+            // Focus on the whiteboard
+            context.whiteboard.focus(this.#pointUV);
+
+            // Play point animation
+            this.playAnimation('Idlepoint');
+        } else {
+            // Start random idea and idle animations
+            this.playAnimation(`Idea0${Math.floor(Math.random() * 2) + 2}`, 0.5, false, 1, () => this.startIdling());
+        }
     }
-    
-    playAnimation(name, crossFadeSeconds = 0.5, loop = false) {
+
+    playAnimation(name, crossFadeSeconds = 0.5, loop = false, timeScale = 1, finishedCallback = null) {
         // Find animation
         const animation = this.#animations.find(animation => animation.name === name);
         if (animation === undefined) {
             throw new Error(`Invalid animation "${name}"`);
         }
-    
+
         // Create action clip for animation
         const action = this.#mixer.clipAction(animation);
-        if (action === this.#playingAction) {
-            return;
-        }
-        action.setLoop(loop ? THREE.LoopForever : THREE.LoopOnce);
-        action.clampWhenFinished = !loop;
-    
+        action.finishedCallback = finishedCallback;
+        action.timeScale = timeScale;
+        action.repetitions = loop ? Infinity : 1;
+        action.clampWhenFinished = true;
+        action.stop();
+
         // Cross-fade from last action clip
         if (this.#playingAction !== null) {
-            this.#playingAction.crossFadeTo(action, crossFadeSeconds);
+            if (crossFadeSeconds > 0) {
+                this.#playingAction.crossFadeTo(action, crossFadeSeconds);
+            } else {
+                this.#playingAction.stop();
+            }
         }
         this.#playingAction = action;
 
         // Play action clip
         action.play();
+    }
+
+    // Wait promise
+    static #wait(milliseconds){
+        return new Promise(resolve => {
+            setTimeout(resolve, milliseconds);
+        });
     }
 }
