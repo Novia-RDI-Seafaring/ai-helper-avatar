@@ -17,19 +17,15 @@ body {
     background-image: url("../images/bg2.png");
     background-size: cover;
     background-repeat: no-repeat;
-    /* background-attachment: fixed; */
     background-position: center;
 }
 
 /* Header */
 header {
-    /* background-color: #333; */
-    /* color: #333; */
     padding: 1em 0;
     text-align: center;
     display: flex;
     justify-content: space-between;
-    /* margin: 10px 50px; */
     height: 90px;
     align-items: center;
     background: rgba(242, 242, 242, 0.2); /* 20% opacity */
@@ -116,6 +112,17 @@ h1{
     overflow-y: auto;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chatUI::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.chatUI {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
 .chat {
     padding-bottom: 50px;
     display: flex;
@@ -173,7 +180,6 @@ h1{
 
 .search-bar {
     display: flex;
-    /* width: 500px; */
     height: 100px;
     border: 1px solid white;
     border-radius: 20px;
@@ -192,9 +198,9 @@ h1{
     color: #fff;
 }
 
-::placeholder {
+/* ::placeholder {
     color: #333;
-}
+} */
 
 .search-bar button {
     background-color: transparent;
@@ -203,10 +209,6 @@ h1{
     border: 1px solid white;
     border-radius: 10px;
     cursor: pointer;
-    /* margin: 0 10px;
-    width: 70px;
-    height: 70px;
-    align-self: center; */
 }
 
 .fa-search {
@@ -234,7 +236,7 @@ h1{
     border: 10px solid #ddd;
     border-top-color: orange;
     animation: loading 1s linear infinite;
-    background-color: rgba(0, 0, 0, 0.3);
+    /* background-color: rgba(0, 0, 0, 0.3); */
 }
 
 @keyframes loading {
