@@ -161,7 +161,7 @@ export default class App {
 
         // Update avatar
         this.#context.avatar.update(this.#context);
-
+        
         // Update whiteboard
         this.#context.whiteboard.update(this.#context);
 

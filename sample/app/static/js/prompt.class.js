@@ -31,8 +31,20 @@ export default class Prompt {
                 })
                 .then(data => {
                     this.#displayMessageHistory(data.message_history);
+                    const {status, focus_point, degrees, bboxes} = data
+                    focus_point[0] = parseInt(focus_point[0]) * 0.01
+                    focus_point[1] = parseInt(focus_point[1]) * 0.01
 
-                    context.avatar.handleMessage(context, data);
+                    context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
+                    context.whiteboard._loadPdf(context, bboxes)
+                    /*
+                    context.avatar.handleMessage(this.#context, {
+                        status: 'success',
+                        focus_point: [0.9, 0.1],
+                        direction: 180,
+                    })
+                    */
+
                 })
                 .catch(e => {
                     console.error(e);
