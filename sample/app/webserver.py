@@ -65,7 +65,7 @@ class WebServer:
                 for bbox in bboxes:
                     x_min, y_min, x_max, y_max = bbox
                     width = x_max - x_min
-                    height = y_max - y_min                
+                    height = y_max - y_min
                     draw.rectangle([x_min, y_min, x_max, y_max], outline='blue', width=2)
 
             except json.JSONDecodeError:
