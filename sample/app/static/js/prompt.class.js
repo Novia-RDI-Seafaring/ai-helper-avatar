@@ -37,14 +37,6 @@ export default class Prompt {
 
                     context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
                     context.whiteboard._loadPdf(context, bboxes)
-                    /*
-                    context.avatar.handleMessage(this.#context, {
-                        status: 'success',
-                        focus_point: [0.9, 0.1],
-                        direction: 180,
-                    })
-                    */
-
                 })
                 .catch(e => {
                     console.error(e);
