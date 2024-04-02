@@ -72,11 +72,16 @@ export default class Whiteboard {
         }
     }
 
-    _loadPdf(context) {
+    _loadPdf(context, bboxes=null) {
+        console.log("loading pdf", context, bboxes);
         const textureLoader = new THREE.TextureLoader();
+        let q = ""
+        if (bboxes) {
+            q = "?bboxes=" + JSON.stringify(bboxes)
+        }
 
         textureLoader.load(
-            './pdf_image',
+            './pdf_image' + q,
             texture => {
                 texture.repeat.set(-1, 1);
                 texture.offset.setX(1);
