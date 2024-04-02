@@ -1,14 +1,11 @@
 export default class Prompt {
     constructor(context) {
+        const chatInputForm = document.querySelector('.search-bar');
         const sendButton = document.querySelector('.send');
         const inputField = document.querySelector('input[name="ai"]');
         const loadingIndicator = document.querySelector('.loading-state');
 
-        // Send the user's query to the server when the user clicks the send button
-        sendButton.addEventListener('click', event => {
-            // Prevent the form from submitting normally
-            event.preventDefault();
-
+        const sendForm = () => {
             const userInput = inputField.value;
 
             // Do not send empty queries
@@ -51,6 +48,16 @@ export default class Prompt {
 
             // Clear the input field
             inputField.value = '';
+        }
+
+        sendButton.addEventListener('click', event => {
+            event.preventDefault();
+            sendForm();
+        });
+
+        chatInputForm.addEventListener('submit', event => {
+            event.preventDefault();
+            sendForm();
         });
     }
 
