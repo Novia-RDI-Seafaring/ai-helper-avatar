@@ -32,7 +32,7 @@ export default class Prompt {
                 .then(data => {
                     this.#displayMessageHistory(data.message_history);
 
-                    context.avatar.handleMessage(data);
+                    context.avatar.handleMessage(context, data);
                 })
                 .catch(e => {
                     console.error(e);

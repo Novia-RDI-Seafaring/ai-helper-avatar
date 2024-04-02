@@ -97,13 +97,12 @@ export default class Avatar {
     // Handle message
     async handleMessage(context, data) {
         this.#stillThinking = false;
-
         if (data.status !== 'success') {
             throw new Error(`Error calling API: ${data.status}`);
         }
 
         // Check if whiteboard needs to spin
-        const spin = data.direction !== null && data.direction !== context.whiteboard.getAngleDegrees();
+        const spin = data.degrees !== null && data.degrees !== context.whiteboard.getAngleDegrees();
 
         // Clear pointing
         let pointingLast = this.#pointing;
