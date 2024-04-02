@@ -89,7 +89,7 @@ class WebServer:
     def _run(self):
         '''The internal method to run the Flask app.'''
 
-        self._server.run(host='127.0.0.1', port=self._port)
+        self._server.run(host='127.0.0.1', port=self._port, debug=False, use_reloader=False)
 
     def stop_server(self):
         '''Stop the web server by making a shutdown request via HTTP.'''
