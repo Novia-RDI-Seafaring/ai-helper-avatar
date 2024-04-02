@@ -6,6 +6,7 @@ import webbrowser
 import os
 
 import json
+from PIL import Image, ImageDraw
 
 from flask import Flask, request, abort, jsonify, send_file
 from flask_cors import CORS
@@ -50,11 +51,36 @@ class WebServer:
         
         @self._server.route('/pdf_image')
         def pdf_image():
-            img = context.searchable_pdf.pdf.image
-            img_io = BytesIO()
-            img.save(img_io, 'PNG')
-            img_io.seek(0)
-            return send_file(img_io, mimetype='image/png')
+            original_img = context.searchable_pdf.pdf.image
+            img_bytes = BytesIO()
+            original_img.save(img_bytes, format='PNG')  # Use the appropriate format (e.g., 'JPEG', 'PNG')
+            img_bytes.seek(0)
+            cloned_img = Image.open(img_bytes)
+
+            bboxes_str = request.args.get('bboxes', '[]')
+            try:
+                # Parse the bboxes string to a Python list
+                bboxes = json.loads(bboxes_str.replace("'", '"'))
+                draw = ImageDraw.Draw(cloned_img)
+                for bbox in bboxes:
+                    x_min, y_min, x_max, y_max = bbox
+                    width = x_max - x_min
+                    height = y_max - y_min                
+                    draw.rectangle([x_min, y_min, x_max, y_max], outline='blue', width=2)
+
+            except json.JSONDecodeError:
+                return "Invalid format for bboxes.", 400
+
+
+            # Check if the image is in landscape mode (width > height)
+            if cloned_img.width > cloned_img.height:
+                # Rotate the image to make it portrait
+                cloned_img = cloned_img.rotate(90, expand=True)
+            
+            cloned_img_io = BytesIO()
+            cloned_img.save(cloned_img_io, 'PNG')
+            cloned_img_io.seek(0)
+            return send_file(cloned_img_io, mimetype='image/png')
 
         # print("The image is saved as ", self._searchable_pdf.pdf.image)
 
@@ -65,6 +91,7 @@ class WebServer:
             cprint(f'WebServer: we are asking: {query}', PRINT_COLOR)
 
             result = context.searchable_pdf.query(query)
+
             return jsonify(result)
 
         @self._server.route('/shutdown')
