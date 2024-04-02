@@ -47,9 +47,10 @@ with open(json_schema_path) as f:
     json_schema_string = json.dumps(json.load(f))
 
 context.searchable_pdf = SearchablePDF(
-    pdf_path,
-    json_value_string,
-    json_schema_string
+    pdf=pdf_path,
+    json_schema_string=json_schema_string,
+    json_value_string=json_value_string,
+    verbose=True
 )
 
 # Create the webserver
