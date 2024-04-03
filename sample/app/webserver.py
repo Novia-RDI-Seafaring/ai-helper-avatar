@@ -52,6 +52,7 @@ class WebServer:
         @self._server.route('/pdf_image')
         def pdf_image():
             original_img = context.searchable_pdf.pdf.image
+            print(original_img.size)
             img_bytes = BytesIO()
             original_img.save(img_bytes, format='PNG')  # Use the appropriate format (e.g., 'JPEG', 'PNG')
             img_bytes.seek(0)
