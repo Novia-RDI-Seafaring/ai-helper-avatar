@@ -23,8 +23,6 @@ class WebServer:
     def __init__(self, context):
         self._context = context
 
-
-        # print("This is from the Webserver ", self._searchable_pdf.pdf.image)
         self._server_thread = None
 
         self._port = self._context.config.getint('webserver', 'port')
