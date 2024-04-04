@@ -33,7 +33,7 @@ export default class Whiteboard {
         white.material = this.#material;
 
         // Load example pdf file
-        this.#loadPdf(context);
+        this.loadPdf(context);
     }
 
     update(context) {
@@ -73,7 +73,7 @@ export default class Whiteboard {
         }
     }
 
-    #loadPdf(context, bboxes=null) {
+    loadPdf(context, bboxes=null) {
         console.log('Loading pdf', context, bboxes);
 
         let q = ""
