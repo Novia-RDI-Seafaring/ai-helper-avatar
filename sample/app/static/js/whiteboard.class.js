@@ -110,13 +110,13 @@ export default class Whiteboard {
     }
 
     // Returns the world position in which the image UV coordinates are located (positive depth is in front of the board)
-    getImageWorldPosition(uv, depth, target) {
+    getImageWorldPosition(pixel, depth, target) {
         const width = 0.84 * 2;
         const height = 0.63 * 2;
         if (this.#imageMetadata.rotated) {
-            target.set((uv.y / this.#imageMetadata.height - 0.5) * width, (uv.x / this.#imageMetadata.width - 0.5) * height, depth);
+            target.set((pixel.y / this.#imageMetadata.height - 0.5) * width, (pixel.x / this.#imageMetadata.width - 0.5) * height, depth);
         } else {
-            target.set((uv.x / this.#imageMetadata.width - 0.5) * width, (uv.y / this.#imageMetadata.height - 0.5) * height, depth);
+            target.set((pixel.x / this.#imageMetadata.width - 0.5) * width, (pixel.y / this.#imageMetadata.height - 0.5) * height, depth);
         }
         return this.#whiteboard.localToWorld(target);
     }
