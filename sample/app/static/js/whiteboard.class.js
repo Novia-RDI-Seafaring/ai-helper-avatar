@@ -74,18 +74,20 @@ export default class Whiteboard {
     }
 
     #loadPdf(context, bboxes=null) {
-        console.log("loading pdf", context, bboxes);
-        const textureLoader = new THREE.TextureLoader();
+        console.log('Loading pdf', context, bboxes);
+
         let q = ""
         if (bboxes) {
             q = "?bboxes=" + JSON.stringify(bboxes)
         }
-        let img_url = './pdf_image' + q;
+        const url = './pdf_image' + q;
 
-        fetch(img_url)
+        fetch(url)
         .then(response => response.json()) // Parse the JSON response
         .then(data => {
             this.#imageMetadata = data;
+
+            const textureLoader = new THREE.TextureLoader();
             textureLoader.load(
                 data.image,
                 texture => {
@@ -101,12 +103,10 @@ export default class Whiteboard {
                     this.#material.needsUpdate = true;
                 }
             );
-
         })
-        .catch(error => console.error('Error fetching image data:', error));
-
-
-
+        .catch(error => {
+            console.error('Error fetching image data:', error);
+        });
     }
 
     // Returns the world position in which the image UV coordinates are located (positive depth is in front of the board)
