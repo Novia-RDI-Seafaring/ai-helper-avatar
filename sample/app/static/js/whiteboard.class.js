@@ -114,9 +114,9 @@ export default class Whiteboard {
         const width = 0.84 * 2;
         const height = 0.63 * 2;
         if (this.#imageMetadata.rotated) {
-            target.set((uv.y - 0.5) * width, (uv.x - 0.5) * height, depth);
+            target.set((uv.y / this.#imageMetadata.height - 0.5) * width, (uv.x / this.#imageMetadata.width - 0.5) * height, depth);
         } else {
-            target.set((uv.x - 0.5) * width, (uv.y - 0.5) * height, depth);
+            target.set((uv.x / this.#imageMetadata.width - 0.5) * width, (uv.y / this.#imageMetadata.height - 0.5) * height, depth);
         }
         return this.#whiteboard.localToWorld(target);
     }
