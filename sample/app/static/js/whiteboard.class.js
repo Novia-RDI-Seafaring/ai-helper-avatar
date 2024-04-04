@@ -33,7 +33,7 @@ export default class Whiteboard {
         white.material = this.#material;
 
         // Load example pdf file
-        this._loadPdf(context);
+        this.#loadPdf(context);
     }
 
     update(context) {
@@ -73,22 +73,7 @@ export default class Whiteboard {
         }
     }
 
-    calculateFocusPoint(focus_point) {
-        //focus_point[0]
-        //focus_point[1]
-        console.log(focus_point, this.#imageMetadata)
-        let x = focus_point[0] / this.#imageMetadata.width;
-        let y = focus_point[1] / this.#imageMetadata.height;
-        if (this.#imageMetadata.rotated) {
-            let tmp = x;
-            x = y;
-            y = tmp;
-        }
-        console.log({x,y})
-        return {x: 0.3, y:0.3}
-    }
-
-    _loadPdf(context, bboxes=null) {
+    #loadPdf(context, bboxes=null) {
         console.log("loading pdf", context, bboxes);
         const textureLoader = new THREE.TextureLoader();
         let q = ""
@@ -128,7 +113,11 @@ export default class Whiteboard {
     getImageWorldPosition(uv, depth, target) {
         const width = 0.84 * 2;
         const height = 0.63 * 2;
-        target.set((uv.x - 0.5) * width, (uv.y - 0.5) * height, depth);
+        if (this.#imageMetadata.rotated) {
+            target.set((uv.y - 0.5) * width, (uv.x - 0.5) * height, depth);
+        } else {
+            target.set((uv.x - 0.5) * width, (uv.y - 0.5) * height, depth);
+        }
         return this.#whiteboard.localToWorld(target);
     }
 
