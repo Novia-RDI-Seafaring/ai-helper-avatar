@@ -33,7 +33,7 @@ export default class Prompt {
                     this.#displayMessageHistory(data.message_history);
                     const {status, focus_point, degrees, bboxes} = data
                     context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
-                    context.whiteboard._loadPdf(context, bboxes)
+                    context.whiteboard.loadPdf(context, bboxes)
                 })
                 .catch(e => {
                     console.error(e);
