@@ -10,6 +10,7 @@ export default class Whiteboard {
     #angleDegrees = 270;
     #focusing = false;
     #focusUV = new THREE.Vector2();
+    #imageMetadata = null;
 
     // Re-usable vectors to prevent run-time allocations
     #tmpV30 = new THREE.Vector3();
@@ -79,22 +80,33 @@ export default class Whiteboard {
         if (bboxes) {
             q = "?bboxes=" + JSON.stringify(bboxes)
         }
+        let img_url = './pdf_image' + q;
 
-        textureLoader.load(
-            './pdf_image' + q,
-            texture => {
-                texture.repeat.set(-1, 1);
-                texture.offset.setX(1);
+        fetch(img_url)
+        .then(response => response.json()) // Parse the JSON response
+        .then(data => {
+            this.#imageMetadata = data;
+            textureLoader.load(
+                data.image,
+                texture => {
+                    texture.repeat.set(-1, 1);
+                    texture.offset.setX(1);
+    
+                    // Make the image sharper
+                    texture.generateMipmaps = false;
+                    texture.anisotropy = context.renderer.capabilities.getMaxAnisotropy();
+                    texture.minFilter = THREE.LinearFilter;
+    
+                    this.#material.map = texture;
+                    this.#material.needsUpdate = true;
+                }
+            );
 
-                // Make the image sharper
-                texture.generateMipmaps = false;
-                texture.anisotropy = context.renderer.capabilities.getMaxAnisotropy();
-                texture.minFilter = THREE.LinearFilter;
+        })
+        .catch(error => console.error('Error fetching image data:', error));
 
-                this.#material.map = texture;
-                this.#material.needsUpdate = true;
-            }
-        );
+
+
     }
 
     // Returns the world position in which the image UV coordinates are located (positive depth is in front of the board)
