@@ -134,8 +134,8 @@ export default class Avatar {
         if (data.focus_point) {
             // Start pointing
             this.#pointing = true;
-
-            this.#pointUV.set(data.focus_point[0], data.focus_point[1]);
+            const p = context.whiteboard.calculateFocusPoint(data.focus_point)
+            this.#pointUV.set(p.x, p.y);
 
             // Focus on the whiteboard
             context.whiteboard.focus(this.#pointUV);

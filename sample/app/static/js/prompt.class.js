@@ -30,23 +30,8 @@ export default class Prompt {
                     return response.json();
                 })
                 .then(data => {
-                    // hard-coded for debuging.. fix this later!
-                    const WIDTH = 1045 // 1684
-                    const HEIGHT = 784 // 1191
-
                     this.#displayMessageHistory(data.message_history);
                     const {status, focus_point, degrees, bboxes} = data
-
-                    // points to upper right corner of bbox
-                    focus_point[0] = bboxes[0][0] / WIDTH 
-                    focus_point[1] = bboxes[0][0] / HEIGHT 
-                    //focus_point[0] = parseInt(focus_point[0] / WIDTH * 100)
-                    //focus_point[1] = parseInt(focus_point[1] / HEIGHT * 100)
-                    console.log("this is the bbox", bboxes)
-                    console.log("this is the first elemnt of bbox", bboxes[0][0])
-                    console.log("This the final focus point", focus_point[0], focus_point[1])
-                    
-
                     context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
                     context.whiteboard._loadPdf(context, bboxes)
                 })

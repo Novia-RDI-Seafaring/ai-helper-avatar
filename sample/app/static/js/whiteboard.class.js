@@ -73,6 +73,21 @@ export default class Whiteboard {
         }
     }
 
+    calculateFocusPoint(focus_point) {
+        //focus_point[0]
+        //focus_point[1]
+        console.log(focus_point, this.#imageMetadata)
+        let x = focus_point[0] / this.#imageMetadata.width;
+        let y = focus_point[1] / this.#imageMetadata.height;
+        if (this.#imageMetadata.rotated) {
+            let tmp = x;
+            x = y;
+            y = tmp;
+        }
+        console.log({x,y})
+        return {x: 0.3, y:0.3}
+    }
+
     _loadPdf(context, bboxes=null) {
         console.log("loading pdf", context, bboxes);
         const textureLoader = new THREE.TextureLoader();
