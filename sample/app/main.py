@@ -50,7 +50,8 @@ context.searchable_pdf = SearchablePDF(
     pdf=pdf_path,
     json_schema_string=json_schema_string,
     json_value_string=json_value_string,
-    verbose=True
+    verbose=True,
+    do_crop=True
 )
 
 # Create the webserver
