@@ -109,7 +109,7 @@ export default class Whiteboard {
         });
     }
 
-    // Returns the world position in which the image UV coordinates are located (positive depth is in front of the board)
+    // Returns the world position in which the image pixel coordinates are located (positive depth is in front of the board)
     getImageWorldPosition(pixel, depth, target) {
         const width = 0.84 * 2;
         const height = 0.63 * 2;
