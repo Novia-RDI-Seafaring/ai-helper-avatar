@@ -61,36 +61,6 @@ export default class App {
 
         // Initial resize
         this.#handleResize();
-
-        // Simulate messages
-        /*setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.9, 0.1],
-            direction: 180,
-        }), 3000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.2, 0.2],
-            direction: 90,
-        }), 6000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.1, 0.9],
-            direction: null,
-        }), 9000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.3, 0.5],
-            direction: 0,
-        }), 12000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            direction: null,
-        }), 15000);*/
     }
 
     #setupThreeJs() {
@@ -165,7 +135,7 @@ export default class App {
         // Update whiteboard
         this.#context.whiteboard.update(this.#context);
 
-        // Update fly controls
+        // Update fly controls (debugging)
         // this.#flyControls.update(dt);
 
         // Render the scene using the camera

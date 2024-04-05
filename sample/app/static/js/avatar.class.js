@@ -101,8 +101,6 @@ export default class Avatar {
             throw new Error(`Error calling API: ${data.status}`);
         }
 
-        console.log(data)
-
         // Check if whiteboard needs to spin
         const spin = data.degrees !== null && data.degrees !== context.whiteboard.getAngleDegrees();
 

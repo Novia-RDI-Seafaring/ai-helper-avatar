@@ -32,7 +32,7 @@ export default class Whiteboard {
         white.material = this.#material;
 
         // Load example pdf file
-        this._loadPdf(context);
+        this.loadPdf(context);
     }
 
     update(context) {
@@ -72,16 +72,14 @@ export default class Whiteboard {
         }
     }
 
-    _loadPdf(context, bboxes=null) {
-        console.log("loading pdf", context, bboxes);
+    loadPdf(context, bboxes = null) {
+        console.log("Loading pdf", context, bboxes);
+
         const textureLoader = new THREE.TextureLoader();
-        let q = ""
-        if (bboxes) {
-            q = "?bboxes=" + JSON.stringify(bboxes)
-        }
+        const query = bboxes !== null ? '' : `?bboxes=${JSON.stringify(bboxes)}`;
 
         textureLoader.load(
-            './pdf_image' + q,
+            './pdf_image' + query,
             texture => {
                 texture.repeat.set(-1, 1);
                 texture.offset.setX(1);

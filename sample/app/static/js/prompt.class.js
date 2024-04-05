@@ -23,29 +23,32 @@ export default class Prompt {
             context.avatar.startThinking(context);
 
             // Send the request to the server
-            const url = `/ask?query=${encodeURIComponent(userInput)}`;
-            const request = new Request(url);
-            fetch(request)
+            fetch('./ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain',
+                },
+                body: userInput,
+            })
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
-                    // hard-coded for debuging.. fix this later!
-                    const WIDTH = 1045 // 1684
-                    const HEIGHT = 784 // 1191
+                    // Hard-coded for debuging.. fix this later!
+                    const imageWidth = 1045 // 1684
+                    const imageHeight = 784 // 1191
 
                     this.#displayMessageHistory(data.message_history);
-                    const {status, focus_point, degrees, bboxes} = data
+                    const {status, focus_point, direction, bboxes} = data
 
-                    console.log('FP from API:', focus_point)
-                    // points to upper right corner of bbox
-                    const tmp = focus_point
+                    //console.log('focus_point from API:', focus_point)
 
-                    focus_point[0] = tmp[0] / WIDTH
-                    focus_point[1] = tmp[1]/ HEIGHT
-                    console.log("scaled fp", focus_point)
+                    focus_point[0] /= imageWidth
+                    focus_point[1] /= imageHeight
+
+                    //console.log('Scaled focus_point', focus_point)
                     
-                    context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
+                    context.avatar.handleMessage(context, {status, focus_point, direction});
                     context.whiteboard._loadPdf(context, bboxes)
                 })
                 .catch(e => {

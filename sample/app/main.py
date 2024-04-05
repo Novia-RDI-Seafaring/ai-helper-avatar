@@ -7,6 +7,7 @@ import time
 from types import SimpleNamespace
 from llama_index.llms import OpenAI
 
+# Load environmental variables for SearchablePDF
 from dotenv import load_dotenv
 load_dotenv() 
 
@@ -37,9 +38,9 @@ context.config.read(config_path)
 
 # Create searchable PDF instance
 
-pdf_path = os.path.join(context.static_directory, 'demo_data/he-specification.pdf')
-json_path = os.path.join(context.static_directory, 'demo_data/he-specification.json')
-json_schema_path = os.path.join(context.static_directory, 'demo_data/he-specification_schema.json')
+pdf_path = os.path.join(context.script_directory, 'demo_data/he-specification.pdf')
+json_path = os.path.join(context.script_directory, 'demo_data/he-specification.json')
+json_schema_path = os.path.join(context.script_directory, 'demo_data/he-specification_schema.json')
 
 with open(json_path) as f:
     json_value_string = json.dumps(json.load(f))
@@ -47,7 +48,7 @@ with open(json_path) as f:
 with open(json_schema_path) as f:    
     json_schema_string = json.dumps(json.load(f))
 
-chat_llm = OpenAI('gpt-3.5-turbo-0125', max_tokens=4000)
+chat_llm = OpenAI(context.config.get('chatgpt', 'model'), max_tokens=context.config.getint('chatgpt', 'max_tokens'))
 context.searchable_pdf = SearchablePDF(
     pdf=pdf_path,
     json_schema_string=json_schema_string,
