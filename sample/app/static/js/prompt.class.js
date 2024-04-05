@@ -49,7 +49,7 @@ export default class Prompt {
                     //console.log('Scaled focus_point', focus_point)
                     
                     context.avatar.handleMessage(context, {status, focus_point, direction});
-                    context.whiteboard._loadPdf(context, bboxes)
+                    context.whiteboard.loadPdf(context, bboxes)
                 })
                 .catch(e => {
                     console.error(e);
