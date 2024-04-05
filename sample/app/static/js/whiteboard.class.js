@@ -76,7 +76,7 @@ export default class Whiteboard {
         console.log('Loading pdf with bounding box', bboxes);
 
         const textureLoader = new THREE.TextureLoader();
-        const query = bboxes !== null ? '' : `?bboxes=${JSON.stringify(bboxes)}`;
+        const query = bboxes === null ? '' : `?bboxes=${JSON.stringify(bboxes)}`;
 
         textureLoader.load(
             './pdf_image' + query,
