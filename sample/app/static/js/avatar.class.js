@@ -102,7 +102,7 @@ export default class Avatar {
         }
 
         // Check if whiteboard needs to spin
-        const spin = data.degrees !== null && data.degrees !== context.whiteboard.getAngleDegrees();
+        const spin = data.direction !== null && data.direction !== context.whiteboard.getAngleDegrees();
 
         // Clear pointing
         let pointingLast = this.#pointing;
