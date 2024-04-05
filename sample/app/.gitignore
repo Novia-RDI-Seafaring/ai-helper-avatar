@@ -3,6 +3,8 @@
 !static/**/*
 !virtual_environments/
 !virtual_environments/**/*
+!demo_data/
+!demo_data/**/*
 !requirements.txt
 !start.bat
 !*.ini
