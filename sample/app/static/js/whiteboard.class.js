@@ -10,7 +10,6 @@ export default class Whiteboard {
     #angleDegrees = 270;
     #focusing = false;
     #focusUV = new THREE.Vector2();
-    #imageMetadata = null;
 
     // Re-usable vectors to prevent run-time allocations
     #tmpV30 = new THREE.Vector3();
@@ -33,7 +32,7 @@ export default class Whiteboard {
         white.material = this.#material;
 
         // Load example pdf file
-        this.loadPdf(context);
+        this._loadPdf(context);
     }
 
     update(context) {
@@ -73,51 +72,36 @@ export default class Whiteboard {
         }
     }
 
-    loadPdf(context, bboxes=null) {
-        console.log('Loading pdf', context, bboxes);
-
+    _loadPdf(context, bboxes=null) {
+        console.log("loading pdf", context, bboxes);
+        const textureLoader = new THREE.TextureLoader();
         let q = ""
         if (bboxes) {
             q = "?bboxes=" + JSON.stringify(bboxes)
         }
-        const url = './pdf_image' + q;
 
-        fetch(url)
-        .then(response => response.json()) // Parse the JSON response
-        .then(data => {
-            this.#imageMetadata = data;
+        textureLoader.load(
+            './pdf_image' + q,
+            texture => {
+                texture.repeat.set(-1, 1);
+                texture.offset.setX(1);
 
-            const textureLoader = new THREE.TextureLoader();
-            textureLoader.load(
-                data.image,
-                texture => {
-                    texture.repeat.set(-1, 1);
-                    texture.offset.setX(1);
-    
-                    // Make the image sharper
-                    texture.generateMipmaps = false;
-                    texture.anisotropy = context.renderer.capabilities.getMaxAnisotropy();
-                    texture.minFilter = THREE.LinearFilter;
-    
-                    this.#material.map = texture;
-                    this.#material.needsUpdate = true;
-                }
-            );
-        })
-        .catch(error => {
-            console.error('Error fetching image data:', error);
-        });
+                // Make the image sharper
+                texture.generateMipmaps = false;
+                texture.anisotropy = context.renderer.capabilities.getMaxAnisotropy();
+                texture.minFilter = THREE.LinearFilter;
+
+                this.#material.map = texture;
+                this.#material.needsUpdate = true;
+            }
+        );
     }
 
-    // Returns the world position in which the image pixel coordinates are located (positive depth is in front of the board)
-    getImageWorldPosition(pixel, depth, target) {
+    // Returns the world position in which the image UV coordinates are located (positive depth is in front of the board)
+    getImageWorldPosition(uv, depth, target) {
         const width = 0.84 * 2;
         const height = 0.63 * 2;
-        if (this.#imageMetadata.rotated) {
-            target.set((pixel.y / this.#imageMetadata.height - 0.5) * width, (pixel.x / this.#imageMetadata.width - 0.5) * height, depth);
-        } else {
-            target.set((pixel.x / this.#imageMetadata.width - 0.5) * width, (pixel.y / this.#imageMetadata.height - 0.5) * height, depth);
-        }
+        target.set((uv.x - 0.5) * width, (uv.y - 0.5) * height, depth);
         return this.#whiteboard.localToWorld(target);
     }
 

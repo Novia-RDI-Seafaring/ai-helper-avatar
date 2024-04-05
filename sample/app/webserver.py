@@ -7,7 +7,6 @@ import os
 
 import json
 from PIL import Image, ImageDraw
-import base64
 
 from flask import Flask, request, abort, jsonify, send_file
 from flask_cors import CORS
@@ -56,7 +55,6 @@ class WebServer:
             original_img.save(img_bytes, format='PNG')  # Use the appropriate format (e.g., 'JPEG', 'PNG')
             img_bytes.seek(0)
             cloned_img = Image.open(img_bytes)
-            rotated = False
 
             bboxes_str = request.args.get('bboxes', '[]')
             try:
@@ -72,27 +70,16 @@ class WebServer:
             except json.JSONDecodeError:
                 return "Invalid format for bboxes.", 400
 
+
             # Check if the image is in landscape mode (width > height)
             if cloned_img.width > cloned_img.height:
                 # Rotate the image to make it portrait
                 cloned_img = cloned_img.rotate(90, expand=True)
-                rotated = True
             
             cloned_img_io = BytesIO()
             cloned_img.save(cloned_img_io, 'PNG')
             cloned_img_io.seek(0)
-
-            encoded_img = base64.b64encode(cloned_img_io.getvalue()).decode('utf-8')
-            img_data_url = f'data:image/png;base64,{encoded_img}'
-
-            pdf_data = {
-                "image": img_data_url,
-                "width": original_img.width,
-                "height": original_img.height,
-                "rotated": rotated
-            }
-            return jsonify(pdf_data)
-            #return send_file(cloned_img_io, mimetype='image/png')
+            return send_file(cloned_img_io, mimetype='image/png')
 
         # print("The image is saved as ", self._searchable_pdf.pdf.image)
 

@@ -101,6 +101,8 @@ export default class Avatar {
             throw new Error(`Error calling API: ${data.status}`);
         }
 
+        console.log(data)
+
         // Check if whiteboard needs to spin
         const spin = data.degrees !== null && data.degrees !== context.whiteboard.getAngleDegrees();
 
@@ -132,6 +134,7 @@ export default class Avatar {
         if (data.focus_point) {
             // Start pointing
             this.#pointing = true;
+
             this.#pointUV.set(data.focus_point[0], data.focus_point[1]);
 
             // Focus on the whiteboard

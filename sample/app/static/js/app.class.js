@@ -16,7 +16,7 @@ export default class App {
             ModelManager.asyncLoadGltfModels(['Avatar02.glb'])
             .then(() => {
                 // Instantiate the application.
-                window.app = new App();
+                new App();
             });
         });
     }
