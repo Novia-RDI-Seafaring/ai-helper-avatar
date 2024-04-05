@@ -39,7 +39,7 @@ export default class Prompt {
                     const imageHeight = 784 // 1191
 
                     this.#displayMessageHistory(data.message_history);
-                    const {status, focus_point, direction, bboxes} = data
+                    const {status, focus_point, degrees, bboxes} = data
 
                     //console.log('focus_point from API:', focus_point)
 
@@ -48,7 +48,7 @@ export default class Prompt {
 
                     //console.log('Scaled focus_point', focus_point)
                     
-                    context.avatar.handleMessage(context, {status, focus_point, direction});
+                    context.avatar.handleMessage(context, {status, focus_point, direction: degrees});
                     context.whiteboard.loadPdf(context, bboxes)
                 })
                 .catch(e => {
