@@ -13,7 +13,7 @@ call conda create -n %ENVIRONMENT_NAME% python=3.11 -y
 call conda activate %ENVIRONMENT_NAME%
 
 :: Install dependencies
-call pip install dotenv flask flask-cors PIL requests termcolor
+call pip install dotenv flask flask-cors pillow requests termcolor
 
 :: Deactivate conda environment
 call conda deactivate
