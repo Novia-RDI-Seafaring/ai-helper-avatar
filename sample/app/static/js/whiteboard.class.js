@@ -47,7 +47,7 @@ export default class Whiteboard {
 
         // Focus on an area
 
-        const tFocus = 1 - Math.pow(0.2, context.elapsedSeconds);
+        const tFocus = 0.05;
 
         // Scale the whiteboard
         const scaleTarget = this.#focusing
