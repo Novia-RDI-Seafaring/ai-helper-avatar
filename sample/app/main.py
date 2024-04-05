@@ -5,6 +5,7 @@ import sys
 import time
 
 from types import SimpleNamespace
+from llama_index.llms import OpenAI
 
 from dotenv import load_dotenv
 load_dotenv() 
@@ -46,10 +47,12 @@ with open(json_path) as f:
 with open(json_schema_path) as f:    
     json_schema_string = json.dumps(json.load(f))
 
+chat_llm = OpenAI('gpt-3.5-turbo-0125', max_tokens=4000)
 context.searchable_pdf = SearchablePDF(
     pdf=pdf_path,
     json_schema_string=json_schema_string,
     json_value_string=json_value_string,
+    chat_llm=chat_llm,
     verbose=True,
     do_crop=True
 )
