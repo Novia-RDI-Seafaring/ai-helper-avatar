@@ -1,6 +1,6 @@
 dotenv
 flask
 flask-cors
-PIL
+pillow
 requests
 termcolor
