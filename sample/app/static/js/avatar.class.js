@@ -17,7 +17,7 @@ export default class Avatar {
 
     constructor(context) {
         // Get the avatar GLTF scene
-        const gltf = ModelManager.getModel('Avatar02.glb');
+        const gltf = ModelManager.getModel('Avatar26.glb');
         gltf.scene.traverse(function (child) {
             if (child.isMesh) {
                 child.castShadow = true;

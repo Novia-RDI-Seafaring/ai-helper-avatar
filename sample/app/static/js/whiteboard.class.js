@@ -17,7 +17,7 @@ export default class Whiteboard {
 
     constructor(context) {
         // Get the avatar GLTF scene
-        const gltf = ModelManager.getModel('Avatar02.glb');
+        const gltf = ModelManager.getModel('Avatar26.glb');
 
         // Add whiteboard and add it to the scene
         this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
