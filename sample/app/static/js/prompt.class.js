@@ -41,12 +41,10 @@ export default class Prompt {
                     this.#displayMessageHistory(data.message_history);
                     const {status, focus_point, degrees, bboxes} = data
 
-                    //console.log('focus_point from API:', focus_point)
-
-                    focus_point[0] /= imageWidth
-                    focus_point[1] /= imageHeight
-
-                    //console.log('Scaled focus_point', focus_point)
+                    if (focus_point !== null) {
+                        focus_point[0] /= imageWidth;
+                        focus_point[1] /= imageHeight;
+                    }
                     
                     context.avatar.handleMessage(context, {status, focus_point, direction: degrees});
                     context.whiteboard.loadPdf(context, bboxes)
