@@ -37,16 +37,14 @@ export default class Prompt {
                     this.#displayMessageHistory(data.message_history);
                     const {status, focus_point, degrees, bboxes} = data
 
+                    console.log('FP from API:', focus_point)
                     // points to upper right corner of bbox
-                    focus_point[0] = bboxes[0][0] / WIDTH 
-                    focus_point[1] = bboxes[0][0] / HEIGHT 
-                    //focus_point[0] = parseInt(focus_point[0] / WIDTH * 100)
-                    //focus_point[1] = parseInt(focus_point[1] / HEIGHT * 100)
-                    console.log("this is the bbox", bboxes)
-                    console.log("this is the first elemnt of bbox", bboxes[0][0])
-                    console.log("This the final focus point", focus_point[0], focus_point[1])
-                    
+                    const tmp = focus_point
 
+                    focus_point[0] = tmp[0] / WIDTH
+                    focus_point[1] = tmp[1]/ HEIGHT
+                    console.log("scaled fp", focus_point)
+                    
                     context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
                     context.whiteboard._loadPdf(context, bboxes)
                 })
