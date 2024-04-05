@@ -89,8 +89,8 @@ export default class Avatar {
 
     startIdling() {
         this.#stillThinking = false;
-        this.playAnimation(`Idle0${Math.floor(Math.random() * 2) + 1}`, 0.5, false, 1, () => {
-            this.playAnimation('Idle03', 0.5, true);
+        this.playAnimation(`Idle0${Math.floor(Math.random() * 4) + 1}`, 0.5, false, 1, () => {
+            this.playAnimation('Idle01', 0.5, false);
         });
     }
 
