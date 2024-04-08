@@ -37,15 +37,6 @@ header {
     text-align: center;
 }
 
-canvas {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: -1;
-}
-
 .head {
     align-items: center;
     display: flex;
@@ -98,6 +89,16 @@ h1 {
     right: 0;
     top: 90px;
 }
+
+canvas {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
 
 .chat-ui {
     bottom: 150px;
@@ -181,6 +182,10 @@ h1 {
     outline: none;
     padding: 15px 20px;
 }
+
+.search-bar input::placeholder {
+    color: #fff;
+  }
 
 .search-bar button {
     background-color: transparent;
