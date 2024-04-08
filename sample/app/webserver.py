@@ -104,11 +104,6 @@ class WebServer:
 
         self._server.run(host=self._host, port=self._port, debug=False, use_reloader=False)
 
-    def stop_server(self):
-        '''Stop the web server by making a shutdown request via HTTP.'''
-
-        requests.get(f'http://{self._host}:{self._port}/shutdown')
-
     def open_page(self):
         '''Open the web server's main page in the default web browser.'''
 
