@@ -90,8 +90,8 @@ class WebServer:
             result = context.searchable_pdf.query(query)
 
             return jsonify(result)
-        @self._server.route('/shutdown')
 
+        @self._server.route('/shutdown')
         def handle_shutdown():
             # Only allow localhost to shut down the server
             if request.remote_addr == '127.0.0.1':
