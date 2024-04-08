@@ -90,6 +90,18 @@ class WebServer:
             result = context.searchable_pdf.query(query)
 
             return jsonify(result)
+        @self._server.route('/shutdown')
+
+        def handle_shutdown():
+            # Only allow localhost to shut down the server
+            if request.remote_addr == '127.0.0.1':
+                try:
+                    self._server.stop()
+                except:
+                    cprint('Failed to stop server', PRINT_COLOR)
+                return 'OK', 200
+            else:
+                abort(404)
 
     def start_server(self):
         '''Starts the web server on a separate thread for non-blocking operations.'''
@@ -98,6 +110,11 @@ class WebServer:
         self._server_thread.start()
 
         cprint(f'WebServer: Webserver started at URL http://{self._host}:{self._port}', PRINT_COLOR)
+
+    def stop_server(self):
+        '''Stop the web server by making a shutdown request via HTTP.'''
+
+        requests.get(f'http://127.0.0.1:{self._port}/shutdown')
 
     def _run(self):
         '''The internal method to run the Flask app.'''
