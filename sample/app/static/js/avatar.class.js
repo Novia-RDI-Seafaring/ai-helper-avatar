@@ -109,7 +109,7 @@ export default class Avatar {
         this.#stillThinking = false;
 
         // Play a random idle animation and then play idle 01 forever
-        this.playAnimation(`Idle0${Math.floor(Math.random() * 4) + 1}`, 0.5, false, 1, () => {
+        this.playAnimation(`Idle0${Math.floor(Math.random() * 3) + 2}`, 0.5, false, 1, () => {
             this.playAnimation('Idle01', 0.5, false);
         });
     }
