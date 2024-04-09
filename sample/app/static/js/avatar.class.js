@@ -102,6 +102,9 @@ export default class Avatar {
         // Clear the idle wait timeout
         this.#clearIdleTimeout();
 
+        // Clear pointing
+        this.#pointing = false;
+        
         // Not thinking anymore
         this.#stillThinking = false;
 
