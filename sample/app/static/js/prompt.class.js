@@ -73,7 +73,7 @@ export default class Prompt {
         chatInputForm.addEventListener('submit', event => {
             event.preventDefault();
             sendForm();
-        });
+        }); 
     }
 
     #displayMessage(message, type) {
@@ -83,7 +83,7 @@ export default class Prompt {
         const messageElement = document.createElement('div');
         // Apply different classes (first and second child) for styling incoming/outgoing messages
         messageElement.className = `message ${type}`;
-        messageElement.innerHTML = `<p class="messageText">${message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+        messageElement.innerHTML = `<pre class="messageText">${message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
         chat.appendChild(messageElement);
 
         // Scroll to the bottom of the chat window
@@ -100,7 +100,7 @@ export default class Prompt {
         const messageElement = document.createElement('div');
         const type = lastMessage.is_user ? 'outgoing' : 'incoming';
         messageElement.className = 'message ' + type;
-        messageElement.innerHTML = `<p class="messageText">${lastMessage.message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+        messageElement.innerHTML = `<pre class="messageText">${lastMessage.message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
         chat.appendChild(messageElement);
 
         // Scroll to the bottom of the chat window
