@@ -83,7 +83,7 @@ export default class Prompt {
         const messageElement = document.createElement('div');
         // Apply different classes (first and second child) for styling incoming/outgoing messages
         messageElement.className = `message ${type}`;
-        messageElement.innerHTML = `<pre class="messageText">${message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+        messageElement.innerHTML = `<p class="messageText">${message}</p><pre class="messageTime">${new Date().toLocaleTimeString()}</p>`;
         chat.appendChild(messageElement);
 
         // Scroll to the bottom of the chat window
@@ -93,17 +93,28 @@ export default class Prompt {
     #displayMessageHistory(messageHistory) {
         const chatUI = document.querySelector('.chat-ui');
         const chat = document.querySelector('.chat');
-
+    
+        if (messageHistory.length === 0) return; // Exit if there's no history
+    
         // Get the last message from the history
         const lastMessage = messageHistory[messageHistory.length - 1];
-
-        const messageElement = document.createElement('div');
         const type = lastMessage.is_user ? 'outgoing' : 'incoming';
+    
+        const messageElement = document.createElement('div');
         messageElement.className = 'message ' + type;
-        messageElement.innerHTML = `<pre class="messageText">${lastMessage.message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+    
+        // Check if the message is intended to be displayed as a list
+        // const isList = lastMessage.message.toLowerCase().includes('list of items:');
+        const isList = lastMessage.message.split('\n').some(line => line.trim().startsWith('-'));
+        if (isList) {
+            messageElement.innerHTML = `<pre class="messageText">${lastMessage.message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+        } else {
+            messageElement.innerHTML = `<p class="messageText">${lastMessage.message}</p><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+        }
         chat.appendChild(messageElement);
-
+    
         // Scroll to the bottom of the chat window
         chatUI.scrollTop = chatUI.scrollHeight;
     }
+    
 }
