@@ -112,7 +112,8 @@ export default class App {
     // Method to update the renderer size when the window is resized
     #handleResize() {
         // Update canvas size
-        this.#context.renderer.setSize(window.innerWidth, window.innerHeight);
+        const canvas = document.querySelector('canvas');
+        this.#context.renderer.setSize(canvas.innerWidth, canvas.innerHeight);
 
         // Update camera projection matrix for the new screen dimensions
         this.#context.camera.aspect = window.innerWidth / window.innerHeight;
