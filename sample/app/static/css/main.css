@@ -91,11 +91,11 @@ h1 {
 }
 
 canvas {
-    height: 100%;
+    height: 100% !important;
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;
+    width: 100% !important;
     z-index: -1;
 }
 
@@ -109,6 +109,17 @@ canvas {
     right: 100px;
     top: 10px;
     width: 30%;
+}
+
+@media screen and (max-width: 768px) {
+    .chat-ui {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100%;
+    }
+    
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -196,9 +207,23 @@ canvas {
     padding: 10px 20px;
 }
 
-.fa-search {
-    font-size: 20px;
-} 
+@media screen and (max-width: 1024px) {
+    .search-bar {
+        height: 80px;
+    }
+
+    .search-bar input {
+        font-size: 30px;
+    }
+
+    .search-bar button {
+        padding: 2px 3px;
+    }
+
+    .search-bar button img {
+        width: 65%;
+    }
+}
 
 .loading-state {
     display: none; /* Hide the loading state by default */
