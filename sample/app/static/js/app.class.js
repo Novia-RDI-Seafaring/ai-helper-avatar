@@ -113,7 +113,8 @@ export default class App {
     #handleResize() {
         // Update canvas size
         const canvas = document.querySelector('canvas');
-        this.#context.renderer.setSize(canvas.innerWidth, canvas.innerHeight);
+        const rect = canvas.getBoundingClientRect();
+        this.#context.renderer.setSize(rect.width, rect.height);
 
         // Update camera projection matrix for the new screen dimensions
         this.#context.camera.aspect = window.innerWidth / window.innerHeight;
