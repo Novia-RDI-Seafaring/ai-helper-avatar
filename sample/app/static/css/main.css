@@ -143,6 +143,16 @@ canvas {
     margin: 10px;
     padding: 10px;
     width: 330px;
+    max-width: 100%; /* Adjust if your design uses a specific max width */
+    overflow-wrap: break-word;
+}
+
+/* Style the <pre> tag to prevent overflow */
+.message pre {
+    white-space: pre-wrap; /* Allows the text to wrap */
+    word-wrap: break-word; /* Break words to prevent overflow */
+    overflow-wrap: break-word; /* Ensures overflow text wraps to next line */
+    max-width: 100%; /* Prevents <pre> from extending beyond its container */
 }
 
 .message.incoming {
