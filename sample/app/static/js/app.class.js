@@ -117,7 +117,7 @@ export default class App {
         this.#context.renderer.setSize(rect.width, rect.height);
 
         // Update camera projection matrix for the new screen dimensions
-        this.#context.camera.aspect = window.innerWidth / window.innerHeight;
+        this.#context.camera.aspect = rect.width / rect.height;
         this.#context.camera.updateProjectionMatrix();
     }
 
