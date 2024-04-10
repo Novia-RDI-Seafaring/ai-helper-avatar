@@ -99,6 +99,14 @@ canvas {
     z-index: -1;
 }
 
+@media screen and (max-width: 1024px) {
+    canvas {
+        width: 100% !important; 
+        /* height: auto !important;
+         */
+    }
+}
+
 
 .chat-ui {
     bottom: 150px;
@@ -232,6 +240,52 @@ canvas {
 
     .search-bar button img {
         width: 65%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .search-section {
+        width: 340px;
+    }
+
+    .search-bar {
+        height: 70px;
+        padding: 0;
+    }
+
+    .search-bar input {
+        font-size: 24px;
+        width: 100%;
+    }
+
+    .search-bar button {
+        padding: 0;
+        margin-right: 10px;
+        margin-top: 10px;
+        height: 48px;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .search-section {
+        width: 340px;
+    }
+
+    .search-bar {
+        height: 70px;
+        padding: 0;
+    }
+
+    .search-bar input {
+        font-size: 24px;
+        width: 100%;
+    }
+
+    .search-bar button {
+        padding: 0;
+        margin-right: 10px;
+        margin-top: 10px;
+        height: 48px;
     }
 }
 
