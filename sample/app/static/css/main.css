@@ -50,10 +50,11 @@ header {
     letter-spacing: 2px;
     margin: 0 10px 0 20px;
     text-transform: uppercase;
+    width: 50px;
 }
 
 .logo img {
-    width: 50px;
+    width: 100%;
 }
 
 h1 {
@@ -63,23 +64,42 @@ h1 {
     font-size: 24px;
 }
 
-.upload_button {
+.prototype {
     margin-right: 10px;
 }
 
-.upload {
-    background: rgba(242, 242, 242, 0.2);
-    border: 1px solid #fff;
-    border-radius: 10px;
-    color: #fff;
-    height: 36px;
-    width: 121px;
+@media screen and (max-width: 912px) {
+    h1 {
+        padding-left: 24px;
+    }
+
 }
 
-.hashtag {
-    font-size: 10px;
-    font-weight: 400;
-    margin: 0 20px;
+@media screen and (max-width: 450px) {
+    header {
+        height: 60px;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        margin: 0 0 0 10px;
+    }
+
+    h1 {
+        font-size: 15px;
+        padding-left: 20px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .logo {
+        width: 35px;
+    }
+
+    h1 {
+        font-size: 11px;
+    }
+
 }
 
 .container {
@@ -97,16 +117,7 @@ canvas {
     top: 0;
     width: 100% !important;
     z-index: -1;
-}
-
-@media screen and (max-width: 1024px) {
-    canvas {
-        width: 100% !important; 
-        /* height: auto !important;
-         */
-    }
-}
-
+} 
 
 .chat-ui {
     bottom: 150px;
@@ -117,6 +128,14 @@ canvas {
     right: 100px;
     top: 10px;
     width: 30%;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.chat-ui::-webkit-scrollbar {
+    display: none;
 }
 
 @media screen and (max-width: 768px) {
@@ -127,18 +146,22 @@ canvas {
         top: 0;
         width: 100%;
     }
-    
 }
 
-/* Hide scrollbar for Chrome, Safari and Opera */
-.chat-ui::-webkit-scrollbar {
-    display: none;
+@media screen and (max-width: 450px) {
+    .chat-ui {
+        width: 80%;
+    }
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
-.chat-ui {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+@media screen and (max-width: 300px) {
+    .chat-ui {
+        bottom: 0;
+    }
+
+    .chat {
+        width: 260px;
+    }
 }
 
 .chat {
@@ -147,7 +170,7 @@ canvas {
 }
 
 .message {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     margin: 10px;
     padding: 10px;
     width: 330px;
@@ -183,6 +206,26 @@ canvas {
     text-align: right;
 }
 
+@media screen and (max-width: 300px) {
+    .message, pre {
+        font-size: 12px;
+    }
+
+    .message-text {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .message-time {
+        font-size: 0.8em;
+        text-align: right;
+    }
+
+    .message.outgoing {
+        margin-right: auto;
+    }
+}
+
 .search-section {
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -214,7 +257,7 @@ canvas {
 
 .search-bar input::placeholder {
     color: #fff;
-  }
+}
 
 .search-bar button {
     background-color: transparent;
@@ -287,6 +330,55 @@ canvas {
         margin-top: 10px;
         height: 48px;
     }
+}
+
+@media screen and (max-width: 350px) {
+    .search-section {
+        width: 300px;
+    }
+
+    .search-bar {
+        height: 60px;
+        padding: 0;
+    }
+
+    .search-bar input {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .search-bar button {
+        padding: 0;
+        margin-right: 10px;
+        margin-top: 10px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .search-section {
+        width: 245px;
+    }
+
+    .search-bar {
+        height: 60px;
+        padding: 0;
+    }
+
+    .search-bar input {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .search-bar button {
+        width: 45px;
+    }
+
+    .search-bar button img{
+        width: 60%;
+        padding-top: 5px;
+    }
+
 }
 
 .loading-state {
