@@ -4,3 +4,4 @@ flask-cors
 pillow
 requests
 termcolor
+llama-index-llms-openai
