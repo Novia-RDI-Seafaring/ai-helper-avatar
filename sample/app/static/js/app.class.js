@@ -13,7 +13,7 @@ export default class App {
     static _init() {
         // After the window loads, pre-load all content and start the app
         window.addEventListener('load', () => {
-            ModelManager.asyncLoadGltfModels(['Avatar02.glb'])
+            ModelManager.asyncLoadGltfModels(['Avatar26.glb'])
             .then(() => {
                 // Instantiate the application.
                 new App();
@@ -61,36 +61,6 @@ export default class App {
 
         // Initial resize
         this.#handleResize();
-
-        // Simulate messages
-        /*setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.9, 0.1],
-            direction: 180,
-        }), 3000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.2, 0.2],
-            direction: 90,
-        }), 6000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.1, 0.9],
-            direction: null,
-        }), 9000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            focus_point: [0.3, 0.5],
-            direction: 0,
-        }), 12000);
-
-        setTimeout(() => this.#context.avatar.handleMessage(this.#context, {
-            status: 'success',
-            direction: null,
-        }), 15000);*/
     }
 
     #setupThreeJs() {
@@ -142,10 +112,12 @@ export default class App {
     // Method to update the renderer size when the window is resized
     #handleResize() {
         // Update canvas size
-        this.#context.renderer.setSize(window.innerWidth, window.innerHeight);
+        const canvas = document.querySelector('canvas');
+        const rect = canvas.getBoundingClientRect();
+        this.#context.renderer.setSize(rect.width, rect.height);
 
         // Update camera projection matrix for the new screen dimensions
-        this.#context.camera.aspect = window.innerWidth / window.innerHeight;
+        this.#context.camera.aspect = rect.width / rect.height;
         this.#context.camera.updateProjectionMatrix();
     }
 
@@ -165,7 +137,7 @@ export default class App {
         // Update whiteboard
         this.#context.whiteboard.update(this.#context);
 
-        // Update fly controls
+        // Update fly controls (debugging)
         // this.#flyControls.update(dt);
 
         // Render the scene using the camera

@@ -1,6 +1,7 @@
+python-dotenv
 flask
 flask-cors
+pillow
 requests
 termcolor
-dotenv
-PIL
+llama-index-llms-openai

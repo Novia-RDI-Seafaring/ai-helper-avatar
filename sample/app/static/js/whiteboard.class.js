@@ -17,7 +17,7 @@ export default class Whiteboard {
 
     constructor(context) {
         // Get the avatar GLTF scene
-        const gltf = ModelManager.getModel('Avatar02.glb');
+        const gltf = ModelManager.getModel('Avatar26.glb');
 
         // Add whiteboard and add it to the scene
         this.#whiteboard = gltf.scene.getObjectByName('Whiteboard');
@@ -32,7 +32,7 @@ export default class Whiteboard {
         white.material = this.#material;
 
         // Load example pdf file
-        this._loadPdf(context);
+        this.loadPdf(context);
     }
 
     update(context) {
@@ -47,7 +47,7 @@ export default class Whiteboard {
 
         // Focus on an area
 
-        const tFocus = 1 - Math.pow(0.2, context.elapsedSeconds);
+        const tFocus = 0.05;
 
         // Scale the whiteboard
         const scaleTarget = this.#focusing
@@ -72,16 +72,14 @@ export default class Whiteboard {
         }
     }
 
-    _loadPdf(context, bboxes=null) {
-        console.log("loading pdf", context, bboxes);
+    loadPdf(context, bboxes = null) {
+        console.log('Loading pdf with bounding box', bboxes);
+
         const textureLoader = new THREE.TextureLoader();
-        let q = ""
-        if (bboxes) {
-            q = "?bboxes=" + JSON.stringify(bboxes)
-        }
+        const query = bboxes === null ? '' : `?bboxes=${JSON.stringify(bboxes)}`;
 
         textureLoader.load(
-            './pdf_image' + q,
+            './pdf_image' + query,
             texture => {
                 texture.repeat.set(-1, 1);
                 texture.offset.setX(1);

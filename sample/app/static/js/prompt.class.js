@@ -23,32 +23,39 @@ export default class Prompt {
             context.avatar.startThinking(context);
 
             // Send the request to the server
-            const url = `/ask?query=${encodeURIComponent(userInput)}`;
-            const request = new Request(url);
-            fetch(request)
+            fetch('./ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain',
+                },
+                body: userInput,
+            })
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
-                    // hard-coded for debuging.. fix this later!
-                    const WIDTH = 1045 // 1684
-                    const HEIGHT = 784 // 1191
+                    // Hard-coded for debuging.. fix this later!
+                    const imageWidth = 1045 // 1684
+                    const imageHeight = 784 // 1191
 
                     this.#displayMessageHistory(data.message_history);
                     const {status, focus_point, degrees, bboxes} = data
-
+                    console.log('original fp:', focus_point)
                     // points to upper right corner of bbox
-                    focus_point[0] = bboxes[0][0] / WIDTH 
-                    focus_point[1] = bboxes[0][0] / HEIGHT 
+                    // focus_point[0] = bboxes[0][0] / WIDTH 
+                    // focus_point[1] = bboxes[0][0] / HEIGHT 
+                    if (focus_point !== null) {
+                        focus_point[0] /= WIDTH;
+                        focus_point[1] /= HEIGHT;
+                    }
                     //focus_point[0] = parseInt(focus_point[0] / WIDTH * 100)
                     //focus_point[1] = parseInt(focus_point[1] / HEIGHT * 100)
                     console.log("this is the bbox", bboxes)
                     console.log("this is the first elemnt of bbox", bboxes[0][0])
                     console.log("This the final focus point", focus_point[0], focus_point[1])
                     
-
-                    context.avatar.handleMessage(context, {status, focus_point, direction:degrees});
-                    context.whiteboard._loadPdf(context, bboxes)
+                    context.avatar.handleMessage(context, {status, focus_point, direction: degrees});
+                    context.whiteboard.loadPdf(context, bboxes)
                 })
                 .catch(e => {
                     console.error(e);
@@ -74,7 +81,7 @@ export default class Prompt {
         chatInputForm.addEventListener('submit', event => {
             event.preventDefault();
             sendForm();
-        });
+        }); 
     }
 
     #displayMessage(message, type) {
@@ -84,7 +91,7 @@ export default class Prompt {
         const messageElement = document.createElement('div');
         // Apply different classes (first and second child) for styling incoming/outgoing messages
         messageElement.className = `message ${type}`;
-        messageElement.innerHTML = `<p class="messageText">${message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+        messageElement.innerHTML = `<p class="messageText">${message}</p><pre class="messageTime">${new Date().toLocaleTimeString()}</p>`;
         chat.appendChild(messageElement);
 
         // Scroll to the bottom of the chat window
@@ -94,17 +101,28 @@ export default class Prompt {
     #displayMessageHistory(messageHistory) {
         const chatUI = document.querySelector('.chat-ui');
         const chat = document.querySelector('.chat');
-
+    
+        if (messageHistory.length === 0) return; // Exit if there's no history
+    
         // Get the last message from the history
         const lastMessage = messageHistory[messageHistory.length - 1];
-
-        const messageElement = document.createElement('div');
         const type = lastMessage.is_user ? 'outgoing' : 'incoming';
+    
+        const messageElement = document.createElement('div');
         messageElement.className = 'message ' + type;
-        messageElement.innerHTML = `<p class="messageText">${lastMessage.message}</p><p class="messageTime">${new Date().toLocaleTimeString()}</p>`;
+    
+        // Check if the message is intended to be displayed as a list
+        // const isList = lastMessage.message.toLowerCase().includes('list of items:');
+        const isList = lastMessage.message.split('\n').some(line => line.trim().startsWith('-'));
+        if (isList) {
+            messageElement.innerHTML = `<pre class="messageText">${lastMessage.message}</pre><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+        } else {
+            messageElement.innerHTML = `<p class="messageText">${lastMessage.message}</p><pre class="messageTime">${new Date().toLocaleTimeString()}</pre>`;
+        }
         chat.appendChild(messageElement);
-
+    
         // Scroll to the bottom of the chat window
         chatUI.scrollTop = chatUI.scrollHeight;
     }
+    
 }

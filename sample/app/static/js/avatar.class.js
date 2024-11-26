@@ -14,10 +14,11 @@ export default class Avatar {
     #pointing = false;
     #pointUV = new THREE.Vector2();
     #stillThinking = false;
+    #idleTimeout = null;
 
     constructor(context) {
         // Get the avatar GLTF scene
-        const gltf = ModelManager.getModel('Avatar02.glb');
+        const gltf = ModelManager.getModel('Avatar26.glb');
         gltf.scene.traverse(function (child) {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -71,7 +72,17 @@ export default class Avatar {
         this.#ik.update(context);
     }
 
+    #clearIdleTimeout() {
+        if (this.#idleTimeout !== null) {
+            clearTimeout(this.#idleTimeout);
+            this.#idleTimeout = null;
+        }
+    }
+
     startThinking(context) {
+        // Clear the idle wait timeout
+        this.#clearIdleTimeout();
+        
         // Clear pointing
         this.#pointing = false;
 
@@ -88,27 +99,39 @@ export default class Avatar {
     }
 
     startIdling() {
+        // Clear the idle wait timeout
+        this.#clearIdleTimeout();
+
+        // Clear pointing
+        this.#pointing = false;
+        
+        // Not thinking anymore
         this.#stillThinking = false;
-        this.playAnimation(`Idle0${Math.floor(Math.random() * 2) + 1}`, 0.5, false, 1, () => {
-            this.playAnimation('Idle03', 0.5, true);
+
+        // Play a random idle animation and then play idle 01 forever
+        this.playAnimation(`Idle0${Math.floor(Math.random() * 3) + 2}`, 0.5, false, 1, () => {
+            this.playAnimation('Idle01', 0.5, false);
         });
     }
 
     // Handle message
     async handleMessage(context, data) {
+        // Clear the idle wait timeout
+        this.#clearIdleTimeout();
+
+        // Not thinking anymore
         this.#stillThinking = false;
-        if (data.status !== 'success') {
-            throw new Error(`Error calling API: ${data.status}`);
-        }
-
-        console.log(data)
-
-        // Check if whiteboard needs to spin
-        const spin = data.degrees !== null && data.degrees !== context.whiteboard.getAngleDegrees();
 
         // Clear pointing
         let pointingLast = this.#pointing;
         this.#pointing = false;
+        
+        if (data.status !== 'success') {
+            throw new Error(`Error calling API: ${data.status}`);
+        }
+
+        // Check if whiteboard needs to spin
+        const spin = data.direction !== null && data.direction !== context.whiteboard.getAngleDegrees();
 
         // Clear whiteboard focus
         context.whiteboard.clearFocus();
@@ -142,6 +165,9 @@ export default class Avatar {
 
             // Play point animation
             this.playAnimation('Idlepoint');
+
+            // Start idling after 15 seconds
+            this.#idleTimeout = setTimeout(this.startIdling.bind(this), 15000);
         } else {
             // Start random idea and idle animations
             this.playAnimation(`Idea0${Math.floor(Math.random() * 2) + 2}`, 0.5, false, 1, () => this.startIdling());
