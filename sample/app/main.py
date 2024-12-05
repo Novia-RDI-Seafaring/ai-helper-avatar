@@ -9,22 +9,7 @@ from llama_index.llms.azure_openai import AzureOpenAI
 
 # Load environmental variables for SearchablePDF
 from dotenv import load_dotenv
-load_dotenv()
-
-azure_api_key = os.getenv('AZURE_OPENAI_API_KEY')
-azure_api_base = os.getenv('AZURE_OPENAI_API_BASE')
-azure_api_version = os.getenv('AZURE_OPENAI_API_VERSION')
-azure_api_deployment_name = os.getenv('AZURE_OPENAI_API_DEPLOYMENT_NAME') 
-
-aoai_api_key = os.getenv('aoai_api_key')
-aoai_endpoint = os.getenv('aoai_endpoint')
-aoai_api_version = os.getenv('aoai_api_version')
-aoai_deployment_name = os.getenv('aoai_deployment_name')
-
-os.environ['AZURE_OPENAI_API_KEY'] = aoai_api_key
-os.environ['AZURE_OPENAI_ENDPOINT'] = aoai_endpoint
-os.environ['AZURE_OPENAI_API_VERSION'] = aoai_api_version
-os.environ['AZURE_OPENAI_DEPLOYMENT_NAME'] = aoai_deployment_name
+load_dotenv() 
 
 aoai_api_key = os.getenv('aoai_api_key')
 aoai_endpoint = os.getenv('aoai_endpoint')
@@ -88,7 +73,8 @@ context.searchable_pdf = SearchablePDF(
     json_schema_string=json_schema_string,
     json_value_string=json_value_string,
     chat_llm=chat_llm,
-    verbose=True
+    verbose=True,
+    do_crop=True
 )
 
 # Create the webserver
