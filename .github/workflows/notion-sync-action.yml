@@ -21,4 +21,4 @@ jobs:
         with:
           notion_token: ${{ secrets.NOTION_TOKEN }}
           notion_page_id: ${{ secrets.NOTION_PAGE_ID }}
-          repo_description: <Short description of the REPO>
+          repo_description: AI helper avatar for informatio nextraction
