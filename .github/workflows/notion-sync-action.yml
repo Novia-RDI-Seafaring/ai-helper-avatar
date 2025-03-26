@@ -1,0 +1,24 @@
+name: Sync README to Notion
+
+on:
+  workflow_dispatch: # Allows manual triggering of the workflow
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+
+jobs:
+  sync_readme:
+    runs-on: ubuntu-latest
+    name: Sync README to Notion
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Sync README to Notion
+        uses: Novia-RDI-Seafaring/notion-sync-action@main
+        with:
+          notion_token: ${{ secrets.NOTION_TOKEN }}
+          notion_page_id: ${{ secrets.NOTION_PAGE_ID }}
+          repo_description: <Short description of the REPO>
